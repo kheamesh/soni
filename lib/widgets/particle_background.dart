@@ -50,7 +50,7 @@ class _ParticleBackgroundState extends State<ParticleBackground>
             particle.update(mousePos);
           }
           _rocket.update();
-          
+
           return CustomPaint(
             painter: CombinedBackgroundPainter(
               stars: _particles,
@@ -143,7 +143,10 @@ class Rocket {
     // Straight slow movement
     position += Offset(cos(angle) * speed, sin(angle) * speed);
 
-    if (position.dx < -500 || position.dx > 3000 || position.dy < -500 || position.dy > 3000) {
+    if (position.dx < -500 ||
+        position.dx > 3000 ||
+        position.dy < -500 ||
+        position.dy > 3000) {
       isActive = false;
     }
   }
@@ -151,12 +154,12 @@ class Rocket {
   void _spawn() {
     int side = _random.nextInt(4);
     double startX, startY;
-    
+
     switch (side) {
       case 0: // Left
         startX = -100;
         startY = _random.nextDouble() * 2000;
-        angle = (_random.nextDouble() - 0.5) * pi / 2.5; 
+        angle = (_random.nextDouble() - 0.5) * pi / 2.5;
         break;
       case 1: // Right
         startX = 2600;
@@ -211,24 +214,31 @@ class CombinedBackgroundPainter extends CustomPainter {
 
       final rSize = rocket.size;
       const opacity = 0.25; // Faded for distance
-      
+
       // Rocket Body (Faded White)
-      final bodyPaint = Paint()..color = Colors.white.withValues(alpha: opacity);
+      final bodyPaint = Paint()
+        ..color = Colors.white.withValues(alpha: opacity);
       final bodyPath = Path();
-      bodyPath.moveTo(0, -rSize * 1.2); 
-      bodyPath.quadraticBezierTo(rSize * 0.4, -rSize * 0.8, rSize * 0.4, 0); 
-      bodyPath.lineTo(rSize * 0.4, rSize * 0.8); 
-      bodyPath.lineTo(-rSize * 0.4, rSize * 0.8); 
-      bodyPath.lineTo(-rSize * 0.4, 0); 
-      bodyPath.quadraticBezierTo(-rSize * 0.4, -rSize * 0.8, 0, -rSize * 1.2); 
+      bodyPath.moveTo(0, -rSize * 1.2);
+      bodyPath.quadraticBezierTo(rSize * 0.4, -rSize * 0.8, rSize * 0.4, 0);
+      bodyPath.lineTo(rSize * 0.4, rSize * 0.8);
+      bodyPath.lineTo(-rSize * 0.4, rSize * 0.8);
+      bodyPath.lineTo(-rSize * 0.4, 0);
+      bodyPath.quadraticBezierTo(-rSize * 0.4, -rSize * 0.8, 0, -rSize * 1.2);
       canvas.drawPath(bodyPath, bodyPaint);
 
       // Rocket Nose & Fins (Faded Red)
-      final accentPaint = Paint()..color = Colors.redAccent.withValues(alpha: opacity);
-      
+      final accentPaint = Paint()
+        ..color = Colors.redAccent.withValues(alpha: opacity);
+
       final nosePath = Path();
       nosePath.moveTo(0, -rSize * 1.2);
-      nosePath.quadraticBezierTo(rSize * 0.25, -rSize * 0.95, rSize * 0.3, -rSize * 0.7);
+      nosePath.quadraticBezierTo(
+        rSize * 0.25,
+        -rSize * 0.95,
+        rSize * 0.3,
+        -rSize * 0.7,
+      );
       nosePath.lineTo(-rSize * 0.3, -rSize * 0.7);
       nosePath.quadraticBezierTo(-rSize * 0.25, -rSize * 0.95, 0, -rSize * 1.2);
       canvas.drawPath(nosePath, accentPaint);
@@ -243,20 +253,29 @@ class CombinedBackgroundPainter extends CustomPainter {
       canvas.drawPath(finPath, accentPaint);
 
       // Window (Faded Blue)
-      canvas.drawCircle(Offset(0, -rSize * 0.1), rSize * 0.2, Paint()..color = Colors.lightBlueAccent.withValues(alpha: opacity));
+      canvas.drawCircle(
+        Offset(0, -rSize * 0.1),
+        rSize * 0.2,
+        Paint()..color = Colors.lightBlueAccent.withValues(alpha: opacity),
+      );
 
       // Thruster Flame (Faded flickering)
       double flicker = 0.8 + 0.4 * sin(animationValue * pi * 20);
-      final flamePaint = Paint()..color = Colors.orangeAccent.withValues(alpha: opacity * 1.2);
+      final flamePaint = Paint()
+        ..color = Colors.orangeAccent.withValues(alpha: opacity * 1.2);
       final flamePath = Path();
       flamePath.moveTo(-rSize * 0.2, rSize * 0.8);
       flamePath.lineTo(0, rSize * (0.8 + 0.6 * flicker));
       flamePath.lineTo(rSize * 0.2, rSize * 0.8);
       canvas.drawPath(flamePath, flamePaint);
-      
-      canvas.drawCircle(Offset(0, rSize * 0.85), rSize * 0.3 * flicker, Paint()
-        ..color = Colors.orange.withValues(alpha: 0.15)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5));
+
+      canvas.drawCircle(
+        Offset(0, rSize * 0.85),
+        rSize * 0.3 * flicker,
+        Paint()
+          ..color = Colors.orange.withValues(alpha: 0.15)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
+      );
 
       canvas.restore();
     }
@@ -267,16 +286,30 @@ class CombinedBackgroundPainter extends CustomPainter {
 
       double dist = (star.position - mousePos).distance;
       if (dist < 150) {
-        auraPaint.color = AppColors.primary.withValues(alpha: (1 - dist / 150) * 0.2);
+        auraPaint.color = AppColors.primary.withValues(
+          alpha: (1 - dist / 150) * 0.2,
+        );
         auraPaint.maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
-        canvas.drawCircle(star.position, star.baseSize * star.currentScale * 6, auraPaint);
-        
-        linePaint.color = AppColors.primary.withValues(alpha: (1 - dist / 150) * 0.3);
+        canvas.drawCircle(
+          star.position,
+          star.baseSize * star.currentScale * 6,
+          auraPaint,
+        );
+
+        linePaint.color = AppColors.primary.withValues(
+          alpha: (1 - dist / 150) * 0.3,
+        );
         canvas.drawLine(star.position, mousePos, linePaint);
       }
 
-      starPaint.color = Colors.white.withValues(alpha: star.currentOpacity.clamp(0.0, 1.0));
-      canvas.drawCircle(star.position, star.baseSize * star.currentScale, starPaint);
+      starPaint.color = Colors.white.withValues(
+        alpha: star.currentOpacity.clamp(0.0, 1.0),
+      );
+      canvas.drawCircle(
+        star.position,
+        star.baseSize * star.currentScale,
+        starPaint,
+      );
     }
   }
 
