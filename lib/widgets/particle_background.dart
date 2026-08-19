@@ -15,9 +15,8 @@ class _ParticleBackgroundState extends State<ParticleBackground>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   final List<StarParticle> _particles = [];
-  final List<SpaceShip> _ships = [];
+  final Rocket _rocket = Rocket();
   final int _starCount = 2000;
-  final int _shipCount = 8;
 
   @override
   void initState() {
@@ -29,10 +28,6 @@ class _ParticleBackgroundState extends State<ParticleBackground>
 
     for (int i = 0; i < _starCount; i++) {
       _particles.add(StarParticle());
-    }
-
-    for (int i = 0; i < _shipCount; i++) {
-      _ships.add(SpaceShip());
     }
   }
 
@@ -54,13 +49,12 @@ class _ParticleBackgroundState extends State<ParticleBackground>
           for (var particle in _particles) {
             particle.update(mousePos);
           }
-          for (var ship in _ships) {
-            ship.update(_controller.value);
-          }
+          _rocket.update();
+          
           return CustomPaint(
             painter: CombinedBackgroundPainter(
               stars: _particles,
-              ships: _ships,
+              rocket: _rocket,
               mousePos: mousePos,
               animationValue: _controller.value,
             ),
@@ -128,48 +122,75 @@ class StarParticle {
   double _lerp(double a, double b, double t) => a + (b - a) * t;
 }
 
-class SpaceShip {
-  late Offset position;
-  late double speed;
-  late double size;
-  late double floatOffset;
+class Rocket {
+  Offset position = Offset.zero;
+  double speed = 0;
+  double size = 15; // Smaller base size
+  double angle = 0;
+  bool isActive = false;
   final Random _random = Random();
 
-  SpaceShip() {
-    _reset();
-    position = Offset(_random.nextDouble() * 2500, position.dy);
-  }
-
-  void _reset() {
-    position = Offset(-200, _random.nextDouble() * 2500);
-    speed = _random.nextDouble() * 3.0 + 2.0;
-    size = _random.nextDouble() * 15 + 10;
-    floatOffset = _random.nextDouble() * pi * 2;
-  }
-
-  void update(double anim) {
-    // Forward movement
-    position += Offset(speed, 0);
-    
-    // Smooth vertical floating
-    double verticalBob = sin(anim * pi * 2 + floatOffset) * 2.0;
-    position += Offset(0, verticalBob);
-
-    if (position.dx > 2600) {
-      _reset();
+  void update() {
+    if (!isActive) {
+      // Increased spawn chance to ensure a rocket appears roughly every 10-15 seconds
+      // 3600 frames per minute / 600 chance = ~6 spawns/min (one every 10s avg)
+      if (_random.nextInt(600) == 0) {
+        _spawn();
+      }
+      return;
     }
+
+    // Straight slow movement
+    position += Offset(cos(angle) * speed, sin(angle) * speed);
+
+    if (position.dx < -500 || position.dx > 3000 || position.dy < -500 || position.dy > 3000) {
+      isActive = false;
+    }
+  }
+
+  void _spawn() {
+    int side = _random.nextInt(4);
+    double startX, startY;
+    
+    switch (side) {
+      case 0: // Left
+        startX = -100;
+        startY = _random.nextDouble() * 2000;
+        angle = (_random.nextDouble() - 0.5) * pi / 2.5; 
+        break;
+      case 1: // Right
+        startX = 2600;
+        startY = _random.nextDouble() * 2000;
+        angle = pi + (_random.nextDouble() - 0.5) * pi / 2.5;
+        break;
+      case 2: // Top
+        startX = _random.nextDouble() * 2500;
+        startY = -100;
+        angle = pi / 2 + (_random.nextDouble() - 0.5) * pi / 2.5;
+        break;
+      default: // Bottom
+        startX = _random.nextDouble() * 2500;
+        startY = 2100;
+        angle = -pi / 2 + (_random.nextDouble() - 0.5) * pi / 2.5;
+        break;
+    }
+
+    position = Offset(startX, startY);
+    speed = _random.nextDouble() * 0.8 + 1.2; // Slow speed for distance feel
+    size = _random.nextDouble() * 5 + 12; // Small size (12-17px)
+    isActive = true;
   }
 }
 
 class CombinedBackgroundPainter extends CustomPainter {
   final List<StarParticle> stars;
-  final List<SpaceShip> ships;
+  final Rocket rocket;
   final Offset mousePos;
   final double animationValue;
 
   CombinedBackgroundPainter({
     required this.stars,
-    required this.ships,
+    required this.rocket,
     required this.mousePos,
     required this.animationValue,
   });
@@ -182,7 +203,65 @@ class CombinedBackgroundPainter extends CustomPainter {
       ..strokeWidth = 0.5
       ..style = PaintingStyle.stroke;
 
-    // 1. Draw Stars
+    // 1. Draw Rare Rocket first (so stars appear on top/around it)
+    if (rocket.isActive) {
+      canvas.save();
+      canvas.translate(rocket.position.dx, rocket.position.dy);
+      canvas.rotate(rocket.angle + pi / 2);
+
+      final rSize = rocket.size;
+      const opacity = 0.25; // Faded for distance
+      
+      // Rocket Body (Faded White)
+      final bodyPaint = Paint()..color = Colors.white.withValues(alpha: opacity);
+      final bodyPath = Path();
+      bodyPath.moveTo(0, -rSize * 1.2); 
+      bodyPath.quadraticBezierTo(rSize * 0.4, -rSize * 0.8, rSize * 0.4, 0); 
+      bodyPath.lineTo(rSize * 0.4, rSize * 0.8); 
+      bodyPath.lineTo(-rSize * 0.4, rSize * 0.8); 
+      bodyPath.lineTo(-rSize * 0.4, 0); 
+      bodyPath.quadraticBezierTo(-rSize * 0.4, -rSize * 0.8, 0, -rSize * 1.2); 
+      canvas.drawPath(bodyPath, bodyPaint);
+
+      // Rocket Nose & Fins (Faded Red)
+      final accentPaint = Paint()..color = Colors.redAccent.withValues(alpha: opacity);
+      
+      final nosePath = Path();
+      nosePath.moveTo(0, -rSize * 1.2);
+      nosePath.quadraticBezierTo(rSize * 0.25, -rSize * 0.95, rSize * 0.3, -rSize * 0.7);
+      nosePath.lineTo(-rSize * 0.3, -rSize * 0.7);
+      nosePath.quadraticBezierTo(-rSize * 0.25, -rSize * 0.95, 0, -rSize * 1.2);
+      canvas.drawPath(nosePath, accentPaint);
+
+      final finPath = Path();
+      finPath.moveTo(-rSize * 0.4, rSize * 0.3);
+      finPath.lineTo(-rSize * 0.7, rSize * 0.9);
+      finPath.lineTo(-rSize * 0.4, rSize * 0.8);
+      finPath.moveTo(rSize * 0.4, rSize * 0.3);
+      finPath.lineTo(rSize * 0.7, rSize * 0.9);
+      finPath.lineTo(rSize * 0.4, rSize * 0.8);
+      canvas.drawPath(finPath, accentPaint);
+
+      // Window (Faded Blue)
+      canvas.drawCircle(Offset(0, -rSize * 0.1), rSize * 0.2, Paint()..color = Colors.lightBlueAccent.withValues(alpha: opacity));
+
+      // Thruster Flame (Faded flickering)
+      double flicker = 0.8 + 0.4 * sin(animationValue * pi * 20);
+      final flamePaint = Paint()..color = Colors.orangeAccent.withValues(alpha: opacity * 1.2);
+      final flamePath = Path();
+      flamePath.moveTo(-rSize * 0.2, rSize * 0.8);
+      flamePath.lineTo(0, rSize * (0.8 + 0.6 * flicker));
+      flamePath.lineTo(rSize * 0.2, rSize * 0.8);
+      canvas.drawPath(flamePath, flamePaint);
+      
+      canvas.drawCircle(Offset(0, rSize * 0.85), rSize * 0.3 * flicker, Paint()
+        ..color = Colors.orange.withValues(alpha: 0.15)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5));
+
+      canvas.restore();
+    }
+
+    // 2. Draw Stars (Drawn last so they stay on top)
     for (var star in stars) {
       if (star.currentOpacity < 0.01) continue;
 
@@ -198,76 +277,6 @@ class CombinedBackgroundPainter extends CustomPainter {
 
       starPaint.color = Colors.white.withValues(alpha: star.currentOpacity.clamp(0.0, 1.0));
       canvas.drawCircle(star.position, star.baseSize * star.currentScale, starPaint);
-    }
-
-    // 2. Draw Space Ships (High Fidelity Vector Art)
-    final shipBodyPaint = Paint()
-      ..color = AppColors.primary.withValues(alpha: 0.9)
-      ..style = PaintingStyle.fill;
-    
-    final wingPaint = Paint()
-      ..color = AppColors.primary.withValues(alpha: 0.6)
-      ..style = PaintingStyle.fill;
-
-    final thrusterPaint = Paint()
-      ..color = AppColors.accent.withValues(alpha: 0.8)
-      ..style = PaintingStyle.fill;
-
-    final engineGlow = Paint()
-      ..style = PaintingStyle.fill;
-
-    for (var ship in ships) {
-      canvas.save();
-      canvas.translate(ship.position.dx, ship.position.dy);
-
-      // --- Draw Wings ---
-      final wings = Path();
-      wings.moveTo(-ship.size * 0.5, -ship.size * 0.6); // Top wing tip
-      wings.lineTo(ship.size * 0.2, 0);
-      wings.lineTo(-ship.size * 0.5, ship.size * 0.6); // Bottom wing tip
-      wings.lineTo(-ship.size * 0.2, 0);
-      wings.close();
-      canvas.drawPath(wings, wingPaint);
-
-      // --- Draw Main Body (Sleek aerodynamic shape) ---
-      final body = Path();
-      body.moveTo(ship.size * 0.8, 0); // Nose
-      body.lineTo(-ship.size * 0.6, -ship.size * 0.25); // Top back
-      body.lineTo(-ship.size * 0.8, 0); // Center back
-      body.lineTo(-ship.size * 0.6, ship.size * 0.25); // Bottom back
-      body.close();
-      
-      // Body Shadow/Depth
-      canvas.drawPath(body, Paint()
-        ..color = Colors.black.withValues(alpha: 0.3)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 2));
-      canvas.drawPath(body, shipBodyPaint);
-
-      // --- Draw Cockpit ---
-      final cockpit = Path();
-      cockpit.moveTo(ship.size * 0.4, 0);
-      cockpit.lineTo(ship.size * 0.1, -ship.size * 0.1);
-      cockpit.lineTo(-ship.size * 0.1, 0);
-      cockpit.lineTo(ship.size * 0.1, ship.size * 0.1);
-      cockpit.close();
-      canvas.drawPath(cockpit, Paint()..color = Colors.white.withValues(alpha: 0.4));
-
-      // --- Animated Thruster Flame ---
-      double flameScale = 0.8 + 0.4 * sin(animationValue * pi * 10); // Rapid flickering
-      final flame = Path();
-      flame.moveTo(-ship.size * 0.8, 0);
-      flame.lineTo(-ship.size * (1.2 + 0.5 * flameScale), -ship.size * 0.15);
-      flame.lineTo(-ship.size * (1.0 + 0.2 * flameScale), 0);
-      flame.lineTo(-ship.size * (1.2 + 0.5 * flameScale), ship.size * 0.15);
-      flame.close();
-
-      engineGlow.color = AppColors.accent.withValues(alpha: 0.4);
-      engineGlow.maskFilter = const MaskFilter.blur(BlurStyle.normal, 10);
-      canvas.drawCircle(Offset(-ship.size * 0.8, 0), ship.size * 0.4 * flameScale, engineGlow);
-      
-      canvas.drawPath(flame, thrusterPaint);
-
-      canvas.restore();
     }
   }
 
