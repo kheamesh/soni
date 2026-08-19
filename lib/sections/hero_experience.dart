@@ -1,0 +1,378 @@
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:get/get.dart';
+import '../core/app_colors.dart';
+import '../core/app_strings.dart';
+import '../controllers/hero_experience_controller.dart';
+
+class HeroExperience extends StatelessWidget {
+  const HeroExperience({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isDesktop = size.width > 900;
+
+    return Container(
+      height: size.height,
+      width: double.infinity,
+      color: Colors.transparent,
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+      child: Stack(
+        children: [
+          // Scanline Overlay
+          Positioned.fill(
+            child: const ExcludeSemantics(
+              child: ScanlineOverlay(),
+            ),
+          ),
+
+          Flex(
+            direction: isDesktop ? Axis.horizontal : Axis.vertical,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Left Side: Information
+              Expanded(
+                flex: isDesktop ? 3 : 0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: isDesktop
+                      ? CrossAxisAlignment.start
+                      : CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      AppStrings.heroEngineer,
+                      style: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 14,
+                            letterSpacing: 8,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                        .animate()
+                        .fadeIn(duration: const Duration(milliseconds: 800))
+                        .slideX(begin: -0.2, end: 0),
+                    const SizedBox(height: 20),
+                    _buildAnimatedText(
+                      AppStrings.heroName,
+                      TextStyle(
+                        fontSize: isDesktop ? 80 : 50,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                        height: 1.0,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Text(
+                      AppStrings.heroDescription,
+                      textAlign: isDesktop ? TextAlign.left : TextAlign.center,
+                      style: TextStyle(
+                        fontSize: isDesktop ? 22 : 18,
+                        color: Colors.white70,
+                        height: 1.5,
+                      ),
+                    ).animate().fadeIn(delay: const Duration(seconds: 1)).slideY(begin: 0.2, end: 0),
+                    const SizedBox(height: 40),
+                    _buildInfoTag(AppStrings.expTag1),
+                    _buildInfoTag(AppStrings.expTag2),
+                    _buildInfoTag(AppStrings.expTag3),
+                  ],
+                ),
+              ),
+
+              if (isDesktop) const SizedBox(width: 50),
+
+              // Right Side: Creative Animation
+              Expanded(
+                flex: isDesktop ? 2 : 0,
+                child: Center(child: const SmartphoneAssembler()),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAnimatedText(
+    String text,
+    TextStyle style, {
+    Duration delay = Duration.zero,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: text.split('').asMap().entries.map((entry) {
+        return Text(entry.value, style: style)
+            .animate(delay: delay + Duration(milliseconds: entry.key * 50))
+            .fadeIn(duration: const Duration(milliseconds: 300))
+            .slideY(begin: 0.2, end: 0, curve: Curves.easeOutBack)
+            .shimmer(
+              delay: const Duration(milliseconds: 500),
+              duration: const Duration(seconds: 1),
+              color: AppColors.primary,
+            );
+      }).toList(),
+    );
+  }
+
+  Widget _buildInfoTag(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(width: 6, height: 6, color: AppColors.primary),
+          const SizedBox(width: 15),
+          Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white54,
+              fontSize: 12,
+              letterSpacing: 2,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    ).animate().fadeIn(delay: const Duration(milliseconds: 1200)).slideX(begin: 0.1, end: 0);
+  }
+}
+
+class SmartphoneAssembler extends StatelessWidget {
+  const SmartphoneAssembler({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.put(HeroExperienceController());
+
+    return SizedBox(
+      width: 400,
+      height: 600,
+      child: AnimatedBuilder(
+        animation: controller.animationController,
+        builder: (context, child) {
+          final animationValue = controller.animationController.value;
+          const cardCount = 6;
+
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              // Connections and Phone Frame - Decorative
+              ExcludeSemantics(
+                child: CustomPaint(
+                  painter: PhonePainter(animationValue),
+                  size: const Size(400, 600),
+                ),
+              ),
+
+              // Phone Screen Content - Accessible
+              Container(
+                width: 180,
+                height: 380,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const FlutterLogo(size: 80)
+                          .animate(onPlay: (c) => c.repeat(reverse: true))
+                          .scale(
+                            begin: const Offset(0.8, 0.8),
+                            end: const Offset(1.1, 1.1),
+                            duration: const Duration(seconds: 2),
+                          )
+                          .shimmer(
+                            color: AppColors.primary.withValues(alpha: 0.3),
+                          ),
+                      const SizedBox(height: 30),
+                      const CodeSimulator(),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Floating Flutter Icon Cards - Decorative
+              ...List.generate(cardCount, (i) {
+                double angle = (i * 2 * pi / cardCount) + (animationValue * pi);
+                double radius = 180 + sin(animationValue * 2 * pi + i) * 30;
+
+                double x = 200 + cos(angle) * radius;
+                double y = 300 + sin(angle) * radius;
+
+                return Positioned(
+                  left: x - 25,
+                  top: y - 25,
+                  child:
+                      ExcludeSemantics(
+                        child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: AppColors.secondary.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: AppColors.primary.withValues(alpha: 0.5),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.1,
+                                    ),
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                              ),
+                              child: const Center(child: FlutterLogo(size: 25)),
+                            )
+                            .animate(onPlay: (c) => c.repeat(reverse: true))
+                            .moveY(
+                              begin: -5,
+                              end: 5,
+                              duration: const Duration(seconds: 2),
+                              curve: Curves.easeInOut,
+                            ),
+                      ),
+                );
+              }),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CodeSimulator extends StatelessWidget {
+  const CodeSimulator({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<String> codeLines = [
+      "class MyApp extends StatelessWidget {",
+      "  @override",
+      "  Widget build(BuildContext context) {",
+      "    return MaterialApp(",
+      "      home: Portfolio(),",
+      "    );",
+      "  }",
+      "}",
+    ];
+
+    return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: codeLines.asMap().entries.map((entry) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child:
+                  Text(
+                        entry.value,
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 8,
+                          fontFamily: 'monospace',
+                        ),
+                      )
+                      .animate(delay: Duration(milliseconds: entry.key * 200))
+                      .fadeIn()
+                      .slideX(begin: -0.2, end: 0),
+            );
+          }).toList(),
+        )
+        .animate(onPlay: (c) => c.repeat())
+        .shimmer(delay: const Duration(seconds: 3), duration: const Duration(seconds: 2));
+  }
+}
+
+class PhonePainter extends CustomPainter {
+  final double animationValue;
+
+  PhonePainter(this.animationValue);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final paint = Paint()
+      ..color = AppColors.primary.withValues(alpha: 0.2)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+
+    final phoneRect = Rect.fromCenter(center: center, width: 200, height: 400);
+    final RRect phoneRRect = RRect.fromRectAndRadius(
+      phoneRect,
+      const Radius.circular(30),
+    );
+
+    final shadowPaint = Paint()
+      ..color = AppColors.primary.withValues(alpha: 0.3)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20);
+    canvas.drawRRect(phoneRRect, shadowPaint);
+    canvas.drawRRect(phoneRRect, paint);
+
+    final screenRect = Rect.fromCenter(center: center, width: 180, height: 380);
+    final RRect screenRRect = RRect.fromRectAndRadius(
+      screenRect,
+      const Radius.circular(20),
+    );
+    canvas.drawRRect(
+      screenRRect,
+      paint
+        ..color = Colors.black.withValues(alpha: 0.8)
+        ..style = PaintingStyle.fill,
+    );
+
+    for (int i = 0; i < 6; i++) {
+      double angle = (i * 2 * pi / 6) + (animationValue * pi);
+      double radius = 180 + sin(animationValue * 2 * pi + i) * 30;
+      Offset pos = center + Offset(cos(angle) * radius, sin(angle) * radius);
+
+      canvas.drawLine(
+        center + Offset(cos(angle) * 100, sin(angle) * 200),
+        pos,
+        paint
+          ..color = AppColors.primary.withValues(alpha: 0.1)
+          ..strokeWidth = 1,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant PhonePainter oldDelegate) => true;
+}
+
+class ScanlineOverlay extends StatelessWidget {
+  const ScanlineOverlay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child:
+          Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.white.withValues(alpha: 0.05),
+                      Colors.transparent,
+                    ],
+                    stops: const [0.0, 0.5, 1.0],
+                  ),
+                ),
+              )
+              .animate(onPlay: (c) => c.repeat())
+              .custom(
+                duration: const Duration(seconds: 5),
+                builder: (context, value, child) => Transform.translate(
+                  offset: Offset(0, (value - 0.5) * 2000),
+                  child: child,
+                ),
+              ),
+    );
+  }
+}
