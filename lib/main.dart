@@ -1,9 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'core/app_theme.dart';
 import 'core/app_colors.dart';
 import 'core/app_strings.dart';
+import 'utils/responsive.dart';
 import 'widgets/particle_background.dart';
 import 'widgets/custom_cursor.dart';
 import 'sections/hero_experience.dart';
@@ -29,6 +31,14 @@ class SoniPortfolio extends StatelessWidget {
       title: AppStrings.appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.unknown,
+        },
+      ),
       // Custom Cursor at the very top
       home: const CustomCursor(child: MainLayout()),
     );
@@ -110,41 +120,18 @@ class MainLayout extends StatelessWidget {
               child: Stack(
                 children: [
                   // Top Right Nav
+                  if (!Responsive.isMobile(context))
                   Positioned(
                         top: 40,
                         right: 40,
                         child: Row(
                           children: [
-                            _buildNavButton(
-                              AppStrings.navMe,
-                              navCtrl.heroKey,
-                              navCtrl,
-                            ),
-                            _buildNavButton(
-                              AppStrings.navWork,
-                              navCtrl.workKey,
-                              navCtrl,
-                            ),
-                            _buildNavButton(
-                              AppStrings.navCraft,
-                              navCtrl.craftKey,
-                              navCtrl,
-                            ),
-                            _buildNavButton(
-                              AppStrings.navLab,
-                              navCtrl.labKey,
-                              navCtrl,
-                            ),
-                            _buildNavButton(
-                              AppStrings.navCode,
-                              navCtrl.codeKey,
-                              navCtrl,
-                            ),
-                            _buildNavButton(
-                              AppStrings.navContact,
-                              navCtrl.contactKey,
-                              navCtrl,
-                            ),
+                            _buildNavButton(AppStrings.navMe, navCtrl.heroKey, navCtrl),
+                            _buildNavButton(AppStrings.navWork, navCtrl.workKey, navCtrl),
+                            _buildNavButton(AppStrings.navCraft, navCtrl.craftKey, navCtrl),
+                            _buildNavButton(AppStrings.navLab, navCtrl.labKey, navCtrl),
+                            _buildNavButton(AppStrings.navCode, navCtrl.codeKey, navCtrl),
+                            _buildNavButton(AppStrings.navContact, navCtrl.contactKey, navCtrl),
                           ],
                         ),
                       )
@@ -154,16 +141,16 @@ class MainLayout extends StatelessWidget {
 
                   // Top Left Identity
                   Positioned(
-                    top: 40,
-                    left: 40,
+                    top: Responsive.isMobile(context) ? 20 : 40,
+                    left: Responsive.isMobile(context) ? 20 : 40,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                               AppStrings.userId,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize: Responsive.isMobile(context) ? 18 : 24,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 4,
                               ),
@@ -173,7 +160,7 @@ class MainLayout extends StatelessWidget {
                             .slideX(begin: -0.2, end: 0),
                         const SizedBox(height: 8),
                         Container(
-                          width: 40,
+                          width: Responsive.isMobile(context) ? 30 : 40,
                           height: 2,
                           color: AppColors.primary,
                         ).animate().scaleX(
@@ -187,6 +174,7 @@ class MainLayout extends StatelessWidget {
                   ),
 
                   // Bottom Right Status
+                  if (!Responsive.isMobile(context))
                   Positioned(
                     bottom: 40,
                     right: 40,

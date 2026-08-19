@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import '../core/app_colors.dart';
 import '../core/app_strings.dart';
+import '../utils/responsive.dart';
 import '../controllers/hero_experience_controller.dart';
 
 class HeroExperience extends StatelessWidget {
@@ -12,87 +13,94 @@ class HeroExperience extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isDesktop = size.width > 900;
+    final isDesktop = Responsive.isDesktop(context) || Responsive.isExtraLargeDesktop(context);
 
     return Container(
-      height: size.height,
+      height: isDesktop ? size.height : null,
       width: double.infinity,
       color: Colors.transparent,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: isDesktop ? 0 : 120),
       child: Stack(
         children: [
-          // Scanline Overlay
           Positioned.fill(
             child: const ExcludeSemantics(
               child: ScanlineOverlay(),
             ),
           ),
 
-          Flex(
-            direction: isDesktop ? Axis.horizontal : Axis.vertical,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Left Side: Information
-              Expanded(
-                flex: isDesktop ? 3 : 0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: isDesktop
-                      ? CrossAxisAlignment.start
-                      : CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      AppStrings.heroEngineer,
-                      style: TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 14,
-                            letterSpacing: 8,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                        .animate()
-                        .fadeIn(duration: const Duration(milliseconds: 800))
-                        .slideX(begin: -0.2, end: 0),
-                    const SizedBox(height: 20),
-                    _buildAnimatedText(
-                      AppStrings.heroName,
-                      TextStyle(
-                        fontSize: isDesktop ? 80 : 50,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                        height: 1.0,
-                        letterSpacing: 2,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Text(
-                      AppStrings.heroDescription,
-                      textAlign: isDesktop ? TextAlign.left : TextAlign.center,
-                      style: TextStyle(
-                        fontSize: isDesktop ? 22 : 18,
-                        color: Colors.white70,
-                        height: 1.5,
-                      ),
-                    ).animate().fadeIn(delay: const Duration(seconds: 1)).slideY(begin: 0.2, end: 0),
-                    const SizedBox(height: 40),
-                    _buildInfoTag(AppStrings.expTag1),
-                    _buildInfoTag(AppStrings.expTag2),
-                    _buildInfoTag(AppStrings.expTag3),
-                  ],
+          Responsive(
+            mobile: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildEngineerInfo(context, isDesktop: false),
+                const SizedBox(height: 60),
+                const SmartphoneAssembler(),
+              ],
+            ),
+            desktop: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: _buildEngineerInfo(context, isDesktop: true),
                 ),
-              ),
-
-              if (isDesktop) const SizedBox(width: 50),
-
-              // Right Side: Creative Animation
-              Expanded(
-                flex: isDesktop ? 2 : 0,
-                child: Center(child: const SmartphoneAssembler()),
-              ),
-            ],
+                const SizedBox(width: 50),
+                const Expanded(
+                  flex: 2,
+                  child: Center(child: SmartphoneAssembler()),
+                ),
+              ],
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildEngineerInfo(BuildContext context, {required bool isDesktop}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      children: [
+        const Text(
+          AppStrings.heroEngineer,
+          style: TextStyle(
+                color: AppColors.primary,
+                fontSize: 14,
+                letterSpacing: 8,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+            .animate()
+            .fadeIn(duration: const Duration(milliseconds: 800))
+            .slideX(begin: -0.2, end: 0),
+        const SizedBox(height: 20),
+        _buildAnimatedText(
+          AppStrings.heroName,
+          TextStyle(
+            fontSize: isDesktop ? 80 : 45,
+            fontWeight: FontWeight.w900,
+            color: Colors.white,
+            height: 1.1,
+            letterSpacing: 2,
+          ),
+          isDesktop: isDesktop,
+        ),
+        const SizedBox(height: 30),
+        Text(
+          AppStrings.heroDescription,
+          textAlign: isDesktop ? TextAlign.left : TextAlign.center,
+          style: TextStyle(
+            fontSize: isDesktop ? 22 : 16,
+            color: Colors.white70,
+            height: 1.5,
+          ),
+        ).animate().fadeIn(delay: const Duration(seconds: 1)).slideY(begin: 0.2, end: 0),
+        const SizedBox(height: 40),
+        _buildInfoTag(AppStrings.expTag1),
+        _buildInfoTag(AppStrings.expTag2),
+        _buildInfoTag(AppStrings.expTag3),
+      ],
     );
   }
 
@@ -100,19 +108,26 @@ class HeroExperience extends StatelessWidget {
     String text,
     TextStyle style, {
     Duration delay = Duration.zero,
+    required bool isDesktop,
   }) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: text.split('').asMap().entries.map((entry) {
-        return Text(entry.value, style: style)
-            .animate(delay: delay + Duration(milliseconds: entry.key * 50))
-            .fadeIn(duration: const Duration(milliseconds: 300))
-            .slideY(begin: 0.2, end: 0, curve: Curves.easeOutBack)
-            .shimmer(
-              delay: const Duration(milliseconds: 500),
-              duration: const Duration(seconds: 1),
-              color: AppColors.primary,
-            );
+    return Column(
+      crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      children: text.split('\n').map((line) {
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: isDesktop ? MainAxisAlignment.start : MainAxisAlignment.center,
+          children: line.split('').asMap().entries.map((entry) {
+            return Text(entry.value, style: style)
+                .animate(delay: delay + Duration(milliseconds: entry.key * 50))
+                .fadeIn(duration: const Duration(milliseconds: 300))
+                .slideY(begin: 0.2, end: 0, curve: Curves.easeOutBack)
+                .shimmer(
+                  delay: const Duration(milliseconds: 500),
+                  duration: const Duration(seconds: 1),
+                  color: AppColors.primary,
+                );
+          }).toList(),
+        );
       }).toList(),
     );
   }
@@ -125,13 +140,15 @@ class HeroExperience extends StatelessWidget {
         children: [
           Container(width: 6, height: 6, color: AppColors.primary),
           const SizedBox(width: 15),
-          Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white54,
-              fontSize: 12,
-              letterSpacing: 2,
-              fontWeight: FontWeight.bold,
+          Flexible(
+            child: Text(
+              text,
+              style: const TextStyle(
+                color: Colors.white54,
+                fontSize: 12,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
@@ -146,102 +163,104 @@ class SmartphoneAssembler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(HeroExperienceController());
+    final isMobile = Responsive.isMobile(context);
+    final scale = isMobile ? 0.7 : 1.0;
 
-    return SizedBox(
-      width: 400,
-      height: 600,
-      child: AnimatedBuilder(
-        animation: controller.animationController,
-        builder: (context, child) {
-          final animationValue = controller.animationController.value;
-          const cardCount = 6;
+    return Transform.scale(
+      scale: scale,
+      child: SizedBox(
+        width: 400,
+        height: 600,
+        child: AnimatedBuilder(
+          animation: controller.animationController,
+          builder: (context, child) {
+            final animationValue = controller.animationController.value;
+            const cardCount = 6;
 
-          return Stack(
-            alignment: Alignment.center,
-            children: [
-              // Connections and Phone Frame - Decorative
-              ExcludeSemantics(
-                child: CustomPaint(
-                  painter: PhonePainter(animationValue),
-                  size: const Size(400, 600),
-                ),
-              ),
-
-              // Phone Screen Content - Accessible
-              Container(
-                width: 180,
-                height: 380,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const FlutterLogo(size: 80)
-                          .animate(onPlay: (c) => c.repeat(reverse: true))
-                          .scale(
-                            begin: const Offset(0.8, 0.8),
-                            end: const Offset(1.1, 1.1),
-                            duration: const Duration(seconds: 2),
-                          )
-                          .shimmer(
-                            color: AppColors.primary.withValues(alpha: 0.3),
-                          ),
-                      const SizedBox(height: 30),
-                      const CodeSimulator(),
-                    ],
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                ExcludeSemantics(
+                  child: CustomPaint(
+                    painter: PhonePainter(animationValue),
+                    size: const Size(400, 600),
                   ),
                 ),
-              ),
 
-              // Floating Flutter Icon Cards - Decorative
-              ...List.generate(cardCount, (i) {
-                double angle = (i * 2 * pi / cardCount) + (animationValue * pi);
-                double radius = 180 + sin(animationValue * 2 * pi + i) * 30;
-
-                double x = 200 + cos(angle) * radius;
-                double y = 300 + sin(angle) * radius;
-
-                return Positioned(
-                  left: x - 25,
-                  top: y - 25,
-                  child:
-                      ExcludeSemantics(
-                        child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: AppColors.secondary.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: AppColors.primary.withValues(alpha: 0.5),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.primary.withValues(
-                                      alpha: 0.1,
-                                    ),
-                                    blurRadius: 10,
-                                  ),
-                                ],
-                              ),
-                              child: const Center(child: FlutterLogo(size: 25)),
-                            )
+                Container(
+                  width: 180,
+                  height: 380,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const FlutterLogo(size: 80)
                             .animate(onPlay: (c) => c.repeat(reverse: true))
-                            .moveY(
-                              begin: -5,
-                              end: 5,
+                            .scale(
+                              begin: const Offset(0.8, 0.8),
+                              end: const Offset(1.1, 1.1),
                               duration: const Duration(seconds: 2),
-                              curve: Curves.easeInOut,
+                            )
+                            .shimmer(
+                              color: AppColors.primary.withValues(alpha: 0.3),
                             ),
-                      ),
-                );
-              }),
-            ],
-          );
-        },
+                        const SizedBox(height: 30),
+                        const CodeSimulator(),
+                      ],
+                    ),
+                  ),
+                ),
+
+                ...List.generate(cardCount, (i) {
+                  double angle = (i * 2 * pi / cardCount) + (animationValue * pi);
+                  double radius = 180 + sin(animationValue * 2 * pi + i) * 30;
+
+                  double x = 200 + cos(angle) * radius;
+                  double y = 300 + sin(angle) * radius;
+
+                  return Positioned(
+                    left: x - 25,
+                    top: y - 25,
+                    child:
+                        ExcludeSemantics(
+                          child: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: AppColors.secondary.withValues(alpha: 0.2),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: AppColors.primary.withValues(alpha: 0.5),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.primary.withValues(
+                                        alpha: 0.1,
+                                      ),
+                                      blurRadius: 10,
+                                    ),
+                                  ],
+                                ),
+                                child: const Center(child: FlutterLogo(size: 25)),
+                              )
+                              .animate(onPlay: (c) => c.repeat(reverse: true))
+                              .moveY(
+                                begin: -5,
+                                end: 5,
+                                duration: const Duration(seconds: 2),
+                                curve: Curves.easeInOut,
+                              ),
+                        ),
+                  );
+                }),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

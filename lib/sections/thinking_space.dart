@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import '../core/app_colors.dart';
 import '../core/app_strings.dart';
+import '../utils/responsive.dart';
 import '../controllers/thinking_controller.dart';
 
 class ThinkingSpace extends StatelessWidget {
@@ -11,28 +12,36 @@ class ThinkingSpace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(ThinkingController());
+    final isMobile = Responsive.isMobile(context);
     
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 100),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 60 : 100),
       child: Column(
-        children: const [
+        children: [
           Text(
             AppStrings.mentalSandbox,
-            style: TextStyle(color: Colors.white, fontSize: 14, letterSpacing: 10, fontWeight: FontWeight.w300),
+            style: TextStyle(
+              color: Colors.white, 
+              fontSize: isMobile ? 12 : 14, 
+              letterSpacing: isMobile ? 5 : 10, 
+              fontWeight: FontWeight.w300
+            ),
           ),
-          SizedBox(height: 100),
+          SizedBox(height: isMobile ? 60 : 100),
           QuestionBlock(
             id: "why",
             question: AppStrings.whyQuestion, 
             initialAnswer: AppStrings.whyInitial,
             glitchAnswer: AppStrings.whyGlitch,
+            isMobile: isMobile,
           ),
-          SizedBox(height: 100),
+          SizedBox(height: isMobile ? 60 : 100),
           QuestionBlock(
             id: "whatif",
             question: AppStrings.whatIfQuestion, 
             initialAnswer: AppStrings.whatIfInitial,
             glitchAnswer: AppStrings.whatIfGlitch,
+            isMobile: isMobile,
           ),
         ],
       ),
@@ -45,6 +54,7 @@ class QuestionBlock extends StatelessWidget {
   final String question;
   final String initialAnswer;
   final String glitchAnswer;
+  final bool isMobile;
   
   const QuestionBlock({
     super.key, 
@@ -52,6 +62,7 @@ class QuestionBlock extends StatelessWidget {
     required this.question, 
     required this.initialAnswer,
     required this.glitchAnswer,
+    required this.isMobile,
   });
 
   @override
@@ -73,7 +84,7 @@ class QuestionBlock extends StatelessWidget {
             return Text(
               question,
               style: TextStyle(
-                fontSize: 80,
+                fontSize: isMobile ? 40 : 80,
                 fontWeight: FontWeight.w900,
                 color: Colors.white.withValues(alpha: 0.05),
               ),
@@ -85,22 +96,25 @@ class QuestionBlock extends StatelessWidget {
             
             if (!revealed) return const SizedBox.shrink();
             
-            return SizedBox(
-              height: 40,
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                transitionBuilder: (child, animation) {
-                  return child.animate().shake(hz: 10, duration: const Duration(milliseconds: 200)).fadeIn();
-                },
-                child: Text(
-                  glitched ? glitchAnswer : initialAnswer,
-                  key: ValueKey(glitched),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: glitched ? AppColors.accent : Colors.white, 
-                    fontSize: 20, 
-                    fontStyle: FontStyle.italic,
-                    fontFamily: glitched ? 'monospace' : null,
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SizedBox(
+                height: isMobile ? 80 : 60,
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    return child.animate().shake(hz: 10, duration: const Duration(milliseconds: 200)).fadeIn();
+                  },
+                  child: Text(
+                    glitched ? glitchAnswer : initialAnswer,
+                    key: ValueKey(glitched),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: glitched ? AppColors.accent : Colors.white, 
+                      fontSize: isMobile ? 16 : 20, 
+                      fontStyle: FontStyle.italic,
+                      fontFamily: glitched ? 'monospace' : null,
+                    ),
                   ),
                 ),
               ),

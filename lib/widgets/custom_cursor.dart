@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../core/app_colors.dart';
@@ -10,11 +11,17 @@ class CustomCursor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Disable custom cursor on mobile/tablet touch devices for better native feel
+    final bool isMobileDevice = !kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
+    final bool isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
+    
+    if (isMobileDevice || isWebMobile) return child;
+
     final controller = Get.put(CursorController());
     
     return MouseRegion(
       cursor: SystemMouseCursors.none,
-      opaque: false, // Ensure events pass through
+      opaque: false,
       child: Listener(
         behavior: HitTestBehavior.translucent,
         onPointerHover: (event) => controller.updatePointerPos(event.position),
@@ -23,14 +30,12 @@ class CustomCursor extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             child,
-            // The actual custom cursor drawn on top
             Obx(() {
               final pointerPos = controller.pointerPos.value;
               final isHovering = controller.isHovering.value;
               final text = controller.hoverText.value;
               
               return Positioned(
-                // Use global position directly
                 left: pointerPos.dx - (isHovering ? 40 : 20),
                 top: pointerPos.dy - (isHovering ? 40 : 20),
                 child: IgnorePointer(
@@ -95,7 +100,12 @@ class CursorHoverRegion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Access controller without injecting again
+    // Detect mobile to skip mouse effects
+    final bool isMobileDevice = !kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
+    final bool isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
+    
+    if (isMobileDevice || isWebMobile) return child;
+
     return MouseRegion(
       onEnter: (_) => Get.find<CursorController>().setHovering(true, text: text),
       onExit: (_) => Get.find<CursorController>().setHovering(false),

@@ -15,7 +15,7 @@ class _ParticleBackgroundState extends State<ParticleBackground>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   final List<StarParticle> _particles = [];
-  final int _starCount = 2000;
+  final int _starCount = 4000;
 
   @override
   void initState() {

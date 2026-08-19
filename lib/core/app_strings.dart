@@ -33,14 +33,45 @@ class AppStrings {
   static const String resultLabel = "THE RESULT";
 
   // Project Data (Example)
-  static const String projectAlphaTitle = "PROJECT ALPHA";
-  static const String projectAlphaDesc = "A quantum-leap in mobile interaction.";
-  static const String projectAlphaProblem = "Legacy architectures were slowing down user intent processing by 40%.";
-  static const String projectAlphaBuild = "Implemented a custom rendering engine using Flutter's low-level Fragment shaders and Rive integrations.";
-  static const String projectAlphaResult = "Achieved 60FPS fluid motion on low-end devices with a 50% reduction in package size.";
+  static const String projectAlphaTitle = "KOHIRA JEWELLERY";
+  static const String projectAlphaDesc = "A premium Jewellery e-commerce application.";
+  static const String projectAlphaProblem = "Modern e-commerce requires high-end visual fidelity and smooth interactions for luxury products.";
+  static const String projectAlphaBuild = "Developed with Clean Architecture, utilizing custom animations and a robust state management system to ensure a seamless shopping experience.";
+  static const String projectAlphaResult = "Delivered a high-performance app with integrated payment gateways and an elegant UI tailored for luxury jewelry.";
+  
+  static const String projectBetaTitle = "CLASSIC ARCHITECTURE";
+  static const String projectBetaDesc = "A sophisticated Flutter architectural foundation.";
+  static const String projectBetaProblem = "Scalability issues in complex apps often stem from tightly coupled UI and business logic.";
+  static const String projectBetaBuild = "Built a robust 'Classic' framework focused on modularity, high performance, and strict clean architecture principles.";
+  static const String projectBetaResult = "Successfully implemented as the core engine for multiple high-traffic applications, ensuring long-term maintainability.";
+
+  static const String projectGammaTitle = "HIREXPERT";
+  static const String projectGammaDesc = "A sophisticated recruitment and talent management platform.";
+  static const String projectGammaProblem = "Traditional hiring processes often lack real-time coordination and efficient candidate tracking.";
+  static const String projectGammaBuild = "Developed a full-featured recruitment portal with Flutter, featuring real-time interview scheduling, candidate profiling, and automated notifications.";
+  static const String projectGammaResult = "Streamlined the recruitment workflow for enterprise clients, significantly reducing time-to-hire through an intuitive mobile interface.";
+
+  static const String projectDeltaTitle = "TRADEAT";
+  static const String projectDeltaDesc = "A sophisticated trading and investment platform.";
+  static const String projectDeltaProblem = "The trading industry needs real-time data accuracy and low-latency execution to ensure user profitability.";
+  static const String projectDeltaBuild = "Engineered with high-performance WebSockets and optimized data streams to provide real-time market updates and instant trade execution.";
+  static const String projectDeltaResult = "Successfully built a scalable trading ecosystem capable of handling thousands of concurrent transactions with sub-millisecond latency.";
+
+  static const String projectMetalTitle = "RUKMINI JEWELLERY";
+  static const String projectMetalDesc = "A specialized Jewellery Inventory Management application.";
+  static const String projectMetalProblem = "Inventory tracking for high-value items often lacks real-time synchronization and secure auditing.";
+  static const String projectMetalBuild = "Integrated secure local storage and cloud syncing with complex item categorization and barcode scanning support.";
+  static const String projectMetalResult = "Reduced inventory leakage by 30% and provided jewelers with an instant overview of their stock and valuation.";
+
+  static const String viewSource = "VIEW_SOURCE";
 
   // Engine Room
-  static const String engineTitle = "ENGINE ROOM";
+  static const String engineTitle = "THE ENGINE ROOM";
+  static const String engineSubTitle = "Aapka high-performance ecosystem yahan se start hota hai.";
+  static const String archLabel = "SOLID_ARCHITECTURE";
+  static const String stateLabel = "REACTIVE_STATE";
+  static const String speedLabel = "OPTIMIZED_PERFORMANCE";
+  static const String secureLabel = "ENCRYPTED_SECURITY";
 
   // Technology Constellation
   static const String techCore = "CORE";
@@ -65,6 +96,7 @@ class AppStrings {
   // The Lab
   static const String labTitle = "THE LAB // PHYSICS_PLAYGROUND";
   static const String labSubtitle = "INTERACT WITH THE CORE COMPONENTS";
+  static const String labDescription = "EXPERIMENTAL_ZONE: Transform and spin components within the 3D Physics Box.";
 
   // Transmission Hub
   static const String transmissionTitle = "ESTABLISH CONNECTION";
