@@ -32,7 +32,7 @@ class TechnologyConstellation extends StatelessWidget {
         child: Container(
           height: isMobile ? 500 : 700,
           width: double.infinity,
-          color: Colors.transparent,
+          color: AppColors.transparent,
           child: AnimatedBuilder(
             animation: controller.animationController,
             builder: (context, child) {
@@ -78,7 +78,7 @@ class ConstellationPainter extends CustomPainter {
     
     textPainter.text = TextSpan(
       text: AppStrings.techCore,
-      style: TextStyle(color: Colors.black, fontSize: 10 * scale, fontWeight: FontWeight.w900, letterSpacing: 2),
+      style: TextStyle(color: AppColors.black, fontSize: 10 * scale, fontWeight: FontWeight.w900, letterSpacing: 2),
     );
     textPainter.layout();
     textPainter.paint(canvas, center - Offset(textPainter.width / 2, textPainter.height / 2));
@@ -110,12 +110,12 @@ class ConstellationPainter extends CustomPainter {
         4 * scale,
         Paint()..color = AppColors.primary.withValues(alpha: starIntensity)..maskFilter = MaskFilter.blur(BlurStyle.normal, 10.0 * starIntensity * scale),
       );
-      canvas.drawCircle(techPos, 2 * scale, Paint()..color = Colors.white);
+      canvas.drawCircle(techPos, 2 * scale, Paint()..color = AppColors.white);
 
       textPainter.text = TextSpan(
         text: tech['name'],
         style: TextStyle(
-          color: Colors.white.withValues(alpha: 0.9),
+          color: AppColors.white.withValues(alpha: 0.9),
           fontSize: (tech['size'] as double) * scale,
           letterSpacing: 2,
           fontWeight: FontWeight.bold,

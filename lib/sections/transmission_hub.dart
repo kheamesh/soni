@@ -121,69 +121,70 @@ class TransmissionHub extends StatelessWidget {
           ? CrossAxisAlignment.center
           : CrossAxisAlignment.start,
       children: [
-        // High-Tech Signal Scanner Animation
-        Center(child: _buildSignalScanner(isMobile)),
+        // Neural Data Core Visualizer
+        Center(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              _buildNeuralCore(isMobile),
+              if (!isMobile) _buildNeuralPath(isMobile),
+            ],
+          ),
+        ),
 
-        SizedBox(height: Get.height * 0.06),
+        SizedBox(height: Get.height * 0.05),
+
+        // Live Data Feed
+        _buildLiveDataFeed(isMobile),
+
+        SizedBox(height: Get.height * 0.04),
 
         Text(
           AppStrings.protocolSelect,
           style: TextStyle(
-            color: AppColors.textSecondary.withValues(alpha: 0.5),
-            fontSize: isMobile ? 10 : 12,
-            letterSpacing: 2,
+            color: AppColors.primary.withValues(alpha: 0.4),
+            fontSize: isMobile ? 10 : 11,
+            letterSpacing: 3,
+            fontWeight: FontWeight.bold,
             fontFamily: 'monospace',
           ),
-        ),
+        ).animate().fadeIn(delay: 300.ms).slideX(begin: -0.2, end: 0),
+
         SizedBox(height: Get.height * 0.02),
+
         Wrap(
           alignment: isMobile ? WrapAlignment.center : WrapAlignment.start,
-          spacing: 15,
-          runSpacing: 15,
+          spacing: 20,
+          runSpacing: 20,
           children: [
-            _buildOption(AppStrings.optionWeb, isMobile),
-            _buildOption(AppStrings.optionMobile, isMobile),
-            _buildOption(AppStrings.optionBeyond, isMobile),
+            _buildOption(AppStrings.optionWeb, isMobile, 0),
+            _buildOption(AppStrings.optionMobile, isMobile, 1),
+            _buildOption(AppStrings.optionBeyond, isMobile, 2),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildSignalScanner(bool isMobile) {
-    final size = isMobile ? Get.width * 0.3 : Get.width * 0.12;
+  Widget _buildNeuralCore(bool isMobile) {
+    final size = isMobile ? Get.width * 0.35 : Get.width * 0.15;
     return Container(
       width: size,
       height: size,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Outer Rotating Ring
+          // Ambient Glow
           Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    width: 1,
-                  ),
-                ),
-              )
-              .animate(onPlay: (c) => c.repeat())
-              .rotate(duration: const Duration(seconds: 10)),
-
-          // Inner Pulsing Glow
-          Container(
-                width: size * 0.6,
-                height: size * 0.6,
+                width: size * 0.5,
+                height: size * 0.5,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.1),
-                      blurRadius: 40,
-                      spreadRadius: 10,
+                      color: AppColors.primary.withValues(alpha: 0.2),
+                      blurRadius: 50,
+                      spreadRadius: 5,
                     ),
                   ],
                 ),
@@ -191,32 +192,164 @@ class TransmissionHub extends StatelessWidget {
               .animate(onPlay: (c) => c.repeat(reverse: true))
               .scale(
                 begin: const Offset(0.8, 0.8),
-                end: const Offset(1.1, 1.1),
-                duration: const Duration(seconds: 2),
+                end: const Offset(1.2, 1.2),
+                duration: GetNumUtils(3).seconds,
               ),
 
-          // Technical Crosshair
-          CustomPaint(size: Size(size, size), painter: CrosshairPainter())
-              .animate(onPlay: (c) => c.repeat())
-              .rotate(duration: const Duration(seconds: 4)),
+          // Multiple Orbiting Data Paths
+          ...List.generate(3, (i) {
+            return Transform.rotate(
+              angle: (i * pi) / 3,
+              child:
+                  Container(
+                        width: size,
+                        height: size * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.elliptical(size, size * 0.3),
+                          ),
+                          border: Border.all(
+                            color: AppColors.primary.withValues(alpha: 0.1),
+                            width: 0.5,
+                          ),
+                        ),
+                      )
+                      .animate(onPlay: (c) => c.repeat())
+                      .rotate(duration: GetNumUtils(5 + i * 2).seconds),
+            );
+          }),
 
-          // Center Core
+          // Data Nodes on Orbits
+          ...List.generate(6, (i) {
+            final angle = (i * 2 * pi) / 6;
+            return _buildOrbitingNode(size, angle, i);
+          }),
+
+          // Central Neural Node
           Container(
-                width: 10,
-                height: 10,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
+                width: 15,
+                height: 15,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
                   shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(color: AppColors.primary, blurRadius: 15),
+                  ],
                 ),
               )
-              .animate(onPlay: (c) => c.repeat(reverse: true))
+              .animate(onPlay: (c) => c.repeat())
               .shimmer(
-                duration: const Duration(seconds: 1),
+                duration: GetNumUtils(1).seconds,
                 color: AppColors.primary,
+              )
+              .scale(
+                begin: const Offset(0.9, 0.9),
+                end: const Offset(1.1, 1.1),
+                duration: GetNumUtils(500).milliseconds,
+                curve: Curves.easeInOut,
               ),
+
+          // Technical Rings
+          CustomPaint(
+                size: Size(size * 0.8, size * 0.8),
+                painter: TechnicalRingPainter(),
+              )
+              .animate(onPlay: (c) => c.repeat())
+              .rotate(duration: GetNumUtils(8).seconds),
         ],
       ),
     );
+  }
+
+  Widget _buildOrbitingNode(double size, double angle, int i) {
+    return Container(
+          width: 4,
+          height: 4,
+          decoration: const BoxDecoration(
+            color: AppColors.primary,
+            shape: BoxShape.circle,
+          ),
+        )
+        .animate(onPlay: (c) => c.repeat())
+        .custom(
+          duration: GetNumUtils(3 + i).seconds,
+          builder: (context, value, child) {
+            final currentAngle = angle + (value * 2 * pi);
+            final x = cos(currentAngle) * (size / 2);
+            final y = sin(currentAngle) * (size / 2) * 0.3; // Elliptical path
+            return Transform.translate(offset: Offset(x, y), child: child);
+          },
+        )
+        .shimmer(color: AppColors.white);
+  }
+
+  Widget _buildNeuralPath(bool isMobile) {
+    final size = Get.width * 0.15;
+    return CustomPaint(
+          size: Size(size, size * 1.5),
+          painter: NeuralPathPainter(
+            color: AppColors.primary.withValues(alpha: 0.15),
+          ),
+        )
+        .animate(onPlay: (c) => c.repeat())
+        .shimmer(
+          duration: GetNumUtils(2).seconds,
+          color: AppColors.primary.withValues(alpha: 0.4),
+        );
+  }
+
+  Widget _buildLiveDataFeed(bool isMobile) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppColors.white.withValues(alpha: 0.02),
+        border: Border(left: BorderSide(color: AppColors.primary, width: 2)),
+      ),
+      child: Column(
+        crossAxisAlignment: isMobile
+            ? CrossAxisAlignment.center
+            : CrossAxisAlignment.start,
+        children: [
+          _buildFeedLine(AppStrings.systConnected, 0),
+          _buildFeedLine(AppStrings.coreOnline, 1),
+          _buildFeedLine(AppStrings.dataStreaming, 2),
+        ],
+      ),
+    ).animate().fadeIn(delay: 500.ms).slideX(begin: -0.1, end: 0);
+  }
+
+  Widget _buildFeedLine(String text, int index) {
+    return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "> ",
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontSize: 9,
+                  fontFamily: 'monospace',
+                ),
+              ),
+              Text(
+                text,
+                style: TextStyle(
+                  color: AppColors.textSecondary.withValues(alpha: 0.6),
+                  fontSize: 9,
+                  fontFamily: 'monospace',
+                  letterSpacing: 1,
+                ),
+              ),
+            ],
+          ),
+        )
+        .animate(onPlay: (c) => c.repeat())
+        .shimmer(
+          delay: (index * 500).ms,
+          duration: GetNumUtils(2).seconds,
+          color: AppColors.primary.withValues(alpha: 0.2),
+        );
   }
 
   Widget _buildRightSide(TransmissionController controller, bool isMobile) {
@@ -270,7 +403,7 @@ class TransmissionHub extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: controller.isTransmitting
                       ? AppColors.primary.withValues(alpha: 0.1)
-                      : Colors.transparent,
+                      : AppColors.transparent,
                   border: Border.all(
                     color: controller.isTransmitting
                         ? AppColors.primary
@@ -342,7 +475,7 @@ class TransmissionHub extends StatelessWidget {
                       duration: Duration(seconds: 1 + index),
                       curve: Curves.easeInOut,
                     )
-                    .shimmer(color: Colors.white),
+                    .shimmer(color: AppColors.white),
           );
         }),
       ),
@@ -379,7 +512,7 @@ class TransmissionHub extends StatelessWidget {
               fontSize: 12,
             ),
             filled: true,
-            fillColor: Colors.white.withValues(alpha: 0.02),
+            fillColor: AppColors.white.withValues(alpha: 0.02),
             contentPadding: EdgeInsets.symmetric(
               horizontal: Get.width * 0.02,
               vertical: Get.height * 0.015,
@@ -427,28 +560,140 @@ class TransmissionHub extends StatelessWidget {
     );
   }
 
-  Widget _buildOption(String text, bool isMobile) {
+  Widget _buildOption(String text, bool isMobile, int index) {
     return CursorHoverRegion(
       text: AppStrings.selectLabel,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: isMobile ? Get.width * 0.05 : Get.width * 0.02,
-          vertical: Get.height * 0.015,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.glassBorder),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: AppColors.textSecondary.withValues(alpha: 0.7),
-            letterSpacing: 2,
-            fontSize: isMobile ? 12 : 14,
-          ),
-        ),
-      ),
+      child:
+          Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.white.withValues(alpha: 0.03),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.2),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "[",
+                      style: TextStyle(color: AppColors.primary, fontSize: 14),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      text,
+                      style: TextStyle(
+                        color: AppColors.textPrimary.withValues(alpha: 0.8),
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.bold,
+                        fontSize: isMobile ? 12 : 14,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      "]",
+                      style: TextStyle(color: AppColors.primary, fontSize: 14),
+                    ),
+                  ],
+                ),
+              )
+              .animate(onPlay: (c) => c.repeat(reverse: true))
+              .shimmer(
+                duration: GetNumUtils(3).seconds,
+                color: AppColors.primary.withValues(alpha: 0.2),
+              )
+              .animate()
+              .fadeIn(
+                duration: GetNumUtils(600).milliseconds,
+                delay: GetNumUtils(200 * index).milliseconds,
+              )
+              .slideX(begin: -0.2, end: 0, curve: Curves.easeOutBack),
     );
   }
+}
+
+class NeuralPathPainter extends CustomPainter {
+  final Color color;
+
+  NeuralPathPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 1.5
+      ..style = PaintingStyle.stroke;
+
+    final path = Path();
+    final startX = size.width / 2;
+    final startY = size.height * 0.2;
+
+    // Main downward trunk
+    path.moveTo(startX, startY);
+    path.lineTo(startX, size.height * 0.6);
+
+    // Branching connections
+    path.moveTo(startX, size.height * 0.6);
+    path.lineTo(startX - 50, size.height * 0.9);
+    path.lineTo(startX - 50, size.height);
+
+    path.moveTo(startX, size.height * 0.6);
+    path.lineTo(startX + 50, size.height * 0.9);
+    path.lineTo(startX + 50, size.height);
+
+    path.moveTo(startX, size.height * 0.6);
+    path.lineTo(startX, size.height);
+
+    canvas.drawPath(path, paint);
+
+    // Draw small circles at joint points
+    paint.style = PaintingStyle.fill;
+    canvas.drawCircle(Offset(startX, size.height * 0.6), 3, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+class TechnicalRingPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = AppColors.primary.withValues(alpha: 0.3)
+      ..strokeWidth = 1
+      ..style = PaintingStyle.stroke;
+
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2;
+
+    // Draw dashed ring
+    for (int i = 0; i < 12; i++) {
+      final startAngle = (i * 2 * pi) / 12;
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        startAngle,
+        (2 * pi) / 24,
+        false,
+        paint,
+      );
+    }
+
+    // Draw small degree markers
+    paint.strokeWidth = 0.5;
+    for (int i = 0; i < 36; i++) {
+      final angle = (i * 2 * pi) / 36;
+      final inner =
+          center + Offset(cos(angle) * (radius - 5), sin(angle) * (radius - 5));
+      final outer = center + Offset(cos(angle) * radius, sin(angle) * radius);
+      canvas.drawLine(inner, outer, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
 class CrosshairPainter extends CustomPainter {

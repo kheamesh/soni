@@ -23,6 +23,29 @@ class AppStrings {
   static const String expTag2 = "FLUTTER & DART SPECIALIST";
   static const String expTag3 = "CLEAN ARCHITECTURE EXPERT";
 
+  // About Section
+  static const String aboutTitle = "Transforming Ideas into Digital Reality";
+  static const String aboutSubtitle = "About Me";
+  static const String aboutDescription1 = "I am a passionate Flutter Developer with a focus on building high-quality, scalable mobile applications. With expertise in Dart and the Flutter framework, I create seamless user experiences that combine beautiful design with robust performance.";
+  static const String aboutDescription2 = "My philosophy revolves around 'Clean Code' and 'User-Centric Design'. I believe that a great application isn't just about how it looks, but how it feels and functions under the hood. From architecture to deployment, I ensure every detail is meticulously crafted.";
+  static const String labelExperience = "Experience";
+  static const String valExperience = "5+ Years";
+  static const String labelLocation = "Location";
+  static const String valLocation = "India / Remote";
+  static const String labelSpecialization = "Specialization";
+  static const String valSpecialization = "Mobile & Web";
+  static const String labelAvailableFor = "Available for";
+  static const String valAvailableFor = "Freelance / Full-time";
+
+  // Code Section
+  static const String codeSectionTitle = "Behind The Code";
+  static const String codeSectionSubtitle = "Development";
+  static const String fileNameMain = "main.dart";
+
+  // Experience Section
+  static const String experienceSectionTitle = "Professional Journey";
+  static const String experienceSectionSubtitle = "Experience";
+
   // Digital Gallery
   static const String archive = "ARCHIVE";
   static const String galleryTitle = "DIGITAL ARCHIVES";
@@ -136,6 +159,11 @@ class AppStrings {
   static const String binary1 = "10101001";
   static const String binary2 = "01101100";
   static const String open = "OPEN";
+  static const String statusStable = "STATUS: STABLE_CONNECTION";
+  static const String encryptionQuantum = "ENCRYPTION: AES-256-QUANTUM";
+  static const String systConnected = "SYST: CONNECTED";
+  static const String coreOnline = "CORE: ONLINE [V2.0]";
+  static const String dataStreaming = "DATA: STREAMING...";
 
   // Footer Experience
   static const String footerTitle = "THE EXPERIENCE ENDS HERE.";
@@ -149,6 +177,10 @@ class AppStrings {
   static const String githubLabel = "GITHUB_LINK";
   static const String linkedinLabel = "LINKEDIN_SYNC";
   static const String emailLabel = "SECURE_MAIL";
+  static const String privacyPolicy = "Privacy Policy";
+  static const String termsOfService = "Terms of Service";
+  static const String footerCredit = "Designed & Built with ❤️ by Kheamesh Soni";
+  static const String footerRights = "© 2024 All Rights Reserved";
 
   // Social Links
   static const String githubUrl = "https://github.com/Weingeniouss";

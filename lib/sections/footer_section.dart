@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../core/app_colors.dart';
+import '../core/app_strings.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
@@ -7,27 +9,27 @@ class FooterSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 40),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.white10)),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: AppColors.whiteTransparent.withValues(alpha: 0.1))),
       ),
       child: Column(
         children: [
-          const Text(
-            "Designed & Built with ❤️ by Kheamesh Soni",
-            style: TextStyle(color: Colors.white38),
+          Text(
+            AppStrings.footerCredit,
+            style: TextStyle(color: AppColors.textPrimary.withValues(alpha: 0.4)),
           ),
           const SizedBox(height: 10),
-          const Text(
-            "© 2024 All Rights Reserved",
-            style: TextStyle(color: Colors.white24, fontSize: 12),
+          Text(
+            AppStrings.footerRights,
+            style: TextStyle(color: AppColors.textPrimary.withValues(alpha: 0.2), fontSize: 12),
           ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(onPressed: () {}, child: const Text("Privacy Policy", style: TextStyle(color: Colors.white24))),
-              const Text("|", style: TextStyle(color: Colors.white10)),
-              TextButton(onPressed: () {}, child: const Text("Terms of Service", style: TextStyle(color: Colors.white24))),
+              TextButton(onPressed: () {}, child: Text(AppStrings.privacyPolicy, style: TextStyle(color: AppColors.textPrimary.withValues(alpha: 0.2)))),
+              Text("|", style: TextStyle(color: AppColors.whiteTransparent.withValues(alpha: 0.1))),
+              TextButton(onPressed: () {}, child: Text(AppStrings.termsOfService, style: TextStyle(color: AppColors.textPrimary.withValues(alpha: 0.2)))),
             ],
           ),
         ],

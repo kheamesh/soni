@@ -24,19 +24,19 @@ class AboutSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SectionHeader(
-                  title: "Transforming Ideas into Digital Reality",
-                  subtitle: "About Me",
+                  title: AppStrings.aboutTitle,
+                  subtitle: AppStrings.aboutSubtitle,
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  "I am a passionate Flutter Developer with a focus on building high-quality, scalable mobile applications. With expertise in Dart and the Flutter framework, I create seamless user experiences that combine beautiful design with robust performance.",
+                  AppStrings.aboutDescription1,
                   style: Theme.of(
                     context,
                   ).textTheme.bodyLarge?.copyWith(height: 1.6),
                 ).animate().fadeIn(delay: 600.ms),
                 const SizedBox(height: 20),
                 Text(
-                  "My philosophy revolves around 'Clean Code' and 'User-Centric Design'. I believe that a great application isn't just about how it looks, but how it feels and functions under the hood. From architecture to deployment, I ensure every detail is meticulously crafted.",
+                  AppStrings.aboutDescription2,
                   style: Theme.of(
                     context,
                   ).textTheme.bodyLarge?.copyWith(height: 1.6),
@@ -51,10 +51,10 @@ class AboutSection extends StatelessWidget {
                 hasGlow: true,
                 child: Column(
                   children: [
-                    _buildDetailRow("Experience", "5+ Years"),
-                    _buildDetailRow("Location", "India / Remote"),
-                    _buildDetailRow("Specialization", "Mobile & Web"),
-                    _buildDetailRow("Available for", "Freelance / Full-time"),
+                    _buildDetailRow(AppStrings.labelExperience, AppStrings.valExperience),
+                    _buildDetailRow(AppStrings.labelLocation, AppStrings.valLocation),
+                    _buildDetailRow(AppStrings.labelSpecialization, AppStrings.valSpecialization),
+                    _buildDetailRow(AppStrings.labelAvailableFor, AppStrings.valAvailableFor),
                   ],
                 ),
               ).animate().fadeIn(delay: 1000.ms).slideX(begin: 0.2, end: 0),
@@ -70,7 +70,7 @@ class AboutSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.white70)),
+          Text(label, style: TextStyle(color: AppColors.textPrimary.withValues(alpha: 0.7))),
           Text(
             value,
             style: const TextStyle(

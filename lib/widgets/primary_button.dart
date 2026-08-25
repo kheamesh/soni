@@ -60,7 +60,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
           child: Text(
             widget.text,
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.white,
               fontWeight: FontWeight.bold,
               fontSize: 16,
               letterSpacing: 1.1,

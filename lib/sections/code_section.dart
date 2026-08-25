@@ -18,8 +18,8 @@ class CodeSection extends StatelessWidget {
       child: Column(
         children: [
           const SectionHeader(
-            title: "Behind The Code",
-            subtitle: "Development",
+            title: AppStrings.codeSectionTitle,
+            subtitle: AppStrings.codeSectionSubtitle,
           ),
           const SizedBox(height: 60),
           GlassCard(
@@ -31,24 +31,24 @@ class CodeSection extends StatelessWidget {
                     horizontal: 20,
                     vertical: 12,
                   ),
-                  decoration: const BoxDecoration(
-                    color: Colors.white10,
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteTransparent.withValues(alpha: 0.1),
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
                   ),
                   child: Row(
                     children: [
-                      _buildDot(Colors.red),
+                      _buildDot(AppColors.terminalRed),
                       const SizedBox(width: 8),
-                      _buildDot(Colors.amber),
+                      _buildDot(AppColors.terminalAmber),
                       const SizedBox(width: 8),
-                      _buildDot(Colors.green),
+                      _buildDot(AppColors.terminalGreen),
                       const Spacer(),
                       const Text(
-                        "main.dart",
-                        style: TextStyle(color: Colors.white38, fontSize: 12),
+                        AppStrings.fileNameMain,
+                        style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
                       ),
                       const Spacer(),
                     ],
@@ -79,7 +79,7 @@ class CodeSection extends StatelessWidget {
                     )
                     .animate()
                     .fadeIn(duration: 2.seconds)
-                    .shimmer(duration: 3.seconds, color: Colors.white12),
+                    .shimmer(duration: 3.seconds, color: AppColors.whiteTransparent.withValues(alpha: 0.1)),
               ],
             ),
           ),

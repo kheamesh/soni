@@ -13,6 +13,11 @@ class AppColors {
   static const Color whiteTransparent = Color(0x08FFFFFF);
   static const Color whiteSemiTransparent = Color(0xE6FFFFFF);
   
+  // Core Colors
+  static const Color black = Colors.black;
+  static const Color white = Colors.white;
+  static const Color transparent = Colors.transparent;
+
   // Terminal Colors
   static const Color terminalRed = Colors.red;
   static const Color terminalAmber = Colors.amber;

@@ -23,8 +23,8 @@ class FooterExperience extends StatelessWidget {
         vertical: isMobile ? 80 : 120,
         horizontal: isMobile ? 20 : 100,
       ),
-      decoration: const BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.white10, width: 0.5)),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: AppColors.whiteTransparent.withValues(alpha: 0.1), width: 0.5)),
       ),
       child: Column(
         children: [
@@ -32,7 +32,7 @@ class FooterExperience extends StatelessWidget {
           Text(
                 AppStrings.footerTitle,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.white,
                   fontSize: isMobile ? 20 : 32,
                   fontWeight: FontWeight.w900,
                   letterSpacing: isMobile ? 4 : 8,
@@ -92,10 +92,10 @@ class FooterExperience extends StatelessWidget {
           // 4. Handcrafted Signature & Copyright
           Column(
             children: [
-              const Text(
+              Text(
                 AppStrings.ksSignature,
-                style: TextStyle(
-                  color: Colors.white,
+                style: const TextStyle(
+                  color: AppColors.white,
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 2,
@@ -106,7 +106,7 @@ class FooterExperience extends StatelessWidget {
                 AppStrings.footerCopyright,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white24,
+                  color: AppColors.textPrimary.withValues(alpha: 0.24),
                   fontSize: isMobile ? 8 : 10,
                   letterSpacing: 2,
                 ),
@@ -123,7 +123,7 @@ class FooterExperience extends StatelessWidget {
       width: isMobile ? double.infinity : 600,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: AppColors.black,
         border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
@@ -165,17 +165,17 @@ class FooterExperience extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 15),
-              const Text(
+              Text(
                 AppStrings.systemLogs,
                 style: TextStyle(
-                  color: Colors.white24,
+                  color: AppColors.textPrimary.withValues(alpha: 0.24),
                   fontSize: 10,
                   fontFamily: 'monospace',
                 ),
               ),
             ],
           ),
-          const Divider(color: Colors.white10, height: 30),
+          Divider(color: AppColors.whiteTransparent.withValues(alpha: 0.1), height: 30),
           Obx(
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,12 +212,12 @@ class FooterExperience extends StatelessWidget {
         child:
             Column(
                   children: [
-                    FaIcon(icon, color: Colors.white, size: 24),
+                    FaIcon(icon, color: AppColors.white, size: 24),
                     const SizedBox(height: 10),
                     Text(
                       label,
-                      style: const TextStyle(
-                        color: Colors.white24,
+                      style: TextStyle(
+                        color: AppColors.textPrimary.withValues(alpha: 0.24),
                         fontSize: 8,
                         letterSpacing: 2,
                       ),

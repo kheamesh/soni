@@ -24,7 +24,7 @@ class TheLab extends StatelessWidget {
           Text(
             AppStrings.labTitle,
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.9),
+              color: AppColors.white.withValues(alpha: 0.9),
               fontSize: isMobile ? 18 : 24,
               letterSpacing: isMobile ? 2 : 5,
             ),
@@ -33,7 +33,7 @@ class TheLab extends StatelessWidget {
           Text(
             AppStrings.engineeringLab,
             style: TextStyle(
-              color: Colors.white38,
+              color: AppColors.textPrimary.withValues(alpha: 0.38),
               fontSize: isMobile ? 10 : 12,
               letterSpacing: 2,
             ),
@@ -51,7 +51,7 @@ class TheLab extends StatelessWidget {
                   onHover: (e) => controller.updateMousePos(e.localPosition),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.02),
+                      color: AppColors.white.withValues(alpha: 0.02),
                       // Translucent background to show global stars
                       borderRadius: BorderRadius.circular(24),
                       border: Border.all(
@@ -114,14 +114,14 @@ class TheLab extends StatelessWidget {
                                           width: size,
                                           height: size,
                                           decoration: BoxDecoration(
-                                            color: Colors.black.withValues(
+                                            color: AppColors.black.withValues(
                                               alpha: 0.8,
                                             ),
                                             shape: BoxShape.circle,
                                             border: Border.all(
                                               color: Color.lerp(
                                                 obj.color,
-                                                Colors.white,
+                                                AppColors.white,
                                                 obj.impactPulse,
                                               )!,
                                               width: 2 + (obj.impactPulse * 4),
@@ -238,7 +238,7 @@ class LabEnvironmentPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final linePaint = Paint()..strokeWidth = 0.5;
-    final botPaint = Paint()..color = Colors.white.withValues(alpha: 0.1);
+    final botPaint = Paint()..color = AppColors.white.withValues(alpha: 0.1);
 
     for (var bot in nanoBots) {
       canvas.drawCircle(bot, 0.8, botPaint);

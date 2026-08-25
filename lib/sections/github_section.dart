@@ -28,11 +28,11 @@ class GithubSection extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(FontAwesomeIcons.github, size: 40, color: Colors.white),
+                    const Icon(FontAwesomeIcons.github, size: 40, color: AppColors.white),
                     const SizedBox(width: 20),
                     const Text(
                       "@kheameshsoni",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.white),
                     ),
                   ],
                 ),
@@ -62,7 +62,7 @@ class GithubSection extends StatelessWidget {
                       );
                     }),
                   ),
-                ).animate(onPlay: (c) => c.repeat()).shimmer(duration: 3.seconds, color: Colors.white10),
+                ).animate(onPlay: (c) => c.repeat()).shimmer(duration: 3.seconds, color: AppColors.whiteTransparent.withValues(alpha: 0.1)),
                 const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -82,7 +82,7 @@ class GithubSection extends StatelessWidget {
 
   Color _getContributionColor(int col, int row) {
     final random = (col * 7 + row) % 10;
-    if (random < 3) return Colors.white.withValues(alpha: 0.05);
+    if (random < 3) return AppColors.white.withValues(alpha: 0.05);
     if (random < 6) return const Color(0xFF0D4429);
     if (random < 8) return const Color(0xFF006D32);
     if (random < 9) return const Color(0xFF26A641);
@@ -93,7 +93,7 @@ class GithubSection extends StatelessWidget {
     return Column(
       children: [
         Text(value, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.primary)),
-        Text(label, style: const TextStyle(color: Colors.white38)),
+        Text(label, style: TextStyle(color: AppColors.textPrimary.withValues(alpha: 0.38))),
       ],
     );
   }

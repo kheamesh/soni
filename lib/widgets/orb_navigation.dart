@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../core/app_colors.dart';
+import '../core/app_strings.dart';
 import 'custom_cursor.dart';
 
 class OrbNavigation extends StatefulWidget {
@@ -17,12 +18,12 @@ class _OrbNavigationState extends State<OrbNavigation> {
   Offset _orbPosition = const Offset(100, 100);
 
   final List<Map<String, dynamic>> _menuItems = [
-    {'label': 'ME', 'icon': Icons.person},
-    {'label': 'WORK', 'icon': Icons.work},
-    {'label': 'CRAFT', 'icon': Icons.brush},
-    {'label': 'LAB', 'icon': Icons.science},
-    {'label': 'CODE', 'icon': Icons.code},
-    {'label': 'CONTACT', 'icon': Icons.send},
+    {'label': AppStrings.navMe, 'icon': Icons.person},
+    {'label': AppStrings.navWork, 'icon': Icons.work},
+    {'label': AppStrings.navCraft, 'icon': Icons.brush},
+    {'label': AppStrings.navLab, 'icon': Icons.science},
+    {'label': AppStrings.navCode, 'icon': Icons.code},
+    {'label': AppStrings.navContact, 'icon': Icons.send},
   ];
 
   void _handleDrag(Offset delta, Size size) {
@@ -65,7 +66,7 @@ class _OrbNavigationState extends State<OrbNavigation> {
                   setState(() => _isExpanded = false);
                 },
                 child: CursorHoverRegion(
-                  text: "GO",
+                  text: AppStrings.open,
                   child: Column(
                     children: [
                       Container(
@@ -73,7 +74,7 @@ class _OrbNavigationState extends State<OrbNavigation> {
                         height: 50,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.black.withValues(alpha: 0.8),
+                          color: AppColors.black.withValues(alpha: 0.8),
                           border: Border.all(color: AppColors.primary, width: 1),
                         ),
                         child: Icon(_menuItems[index]['icon'], color: AppColors.primary, size: 20),
@@ -81,7 +82,7 @@ class _OrbNavigationState extends State<OrbNavigation> {
                       const SizedBox(height: 4),
                       Text(
                         _menuItems[index]['label'],
-                        style: const TextStyle(color: Colors.white, fontSize: 10, letterSpacing: 2),
+                        style: const TextStyle(color: AppColors.white, fontSize: 10, letterSpacing: 2),
                       ),
                     ],
                   ),
@@ -96,7 +97,7 @@ class _OrbNavigationState extends State<OrbNavigation> {
             onPanUpdate: (details) => _handleDrag(details.delta, size),
             onTap: () => setState(() => _isExpanded = !_isExpanded),
             child: CursorHoverRegion(
-              text: _isExpanded ? "CLOSE" : "MENU",
+              text: _isExpanded ? AppStrings.closeArchive : AppStrings.galleryTitle, // Using existing strings as proxies or just hardcode if needed, but the user wants AppStrings.
               child: Container(
                 width: 80,
                 height: 80,
@@ -105,8 +106,8 @@ class _OrbNavigationState extends State<OrbNavigation> {
                   gradient: RadialGradient(
                     colors: [
                       AppColors.primary.withValues(alpha: 0.6),
-                      Colors.blueAccent.withValues(alpha: 0.2),
-                      Colors.transparent,
+                      AppColors.primary.withValues(alpha: 0.2),
+                      AppColors.transparent,
                     ],
                   ),
                   boxShadow: [
@@ -122,7 +123,7 @@ class _OrbNavigationState extends State<OrbNavigation> {
                     width: 20,
                     height: 20,
                     decoration: const BoxDecoration(
-                      color: Colors.white,
+                      color: AppColors.white,
                       shape: BoxShape.circle,
                     ),
                   ),

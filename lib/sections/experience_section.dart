@@ -19,8 +19,8 @@ class ExperienceSection extends StatelessWidget {
       child: Column(
         children: [
           const SectionHeader(
-            title: "Professional Journey",
-            subtitle: "Experience",
+            title: AppStrings.experienceSectionTitle,
+            subtitle: AppStrings.experienceSectionSubtitle,
             crossAxisAlignment: CrossAxisAlignment.center,
           ),
           const SizedBox(height: 60),
@@ -64,7 +64,7 @@ class ExperienceItem extends StatelessWidget {
                 ),
                 Text(
                   exp['company']!,
-                  style: const TextStyle(color: Colors.white38, fontSize: 14),
+                  style: TextStyle(color: AppColors.textPrimary.withValues(alpha: 0.38), fontSize: 14),
                 ),
               ],
             ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.1, end: 0),
@@ -136,14 +136,14 @@ class ExperienceItem extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: AppColors.white,
                               ),
                             ),
                             const SizedBox(height: 12),
                             Text(
                               exp['description']!,
-                              style: const TextStyle(
-                                color: Colors.white70,
+                              style: TextStyle(
+                                color: AppColors.textPrimary.withValues(alpha: 0.7),
                                 height: 1.6,
                                 fontSize: 15,
                               ),

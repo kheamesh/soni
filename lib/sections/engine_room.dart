@@ -28,7 +28,7 @@ class EngineRoom extends StatelessWidget {
           Text(
             AppStrings.engineMainTitle,
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.9),
+              color: AppColors.white.withValues(alpha: 0.9),
               fontSize: isMobile ? 18 : 24,
               letterSpacing: isMobile ? 5 : 10,
               fontWeight: FontWeight.w300,
@@ -39,7 +39,7 @@ class EngineRoom extends StatelessWidget {
             AppStrings.engineDescription,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white38,
+              color: AppColors.textPrimary.withValues(alpha: 0.38),
               fontSize: isMobile ? 10 : 12,
               letterSpacing: 2,
             ),
@@ -187,13 +187,13 @@ class MachinePainter extends CustomPainter {
         center,
         radius,
         paint
-          ..color = Colors.white.withValues(alpha: 0.05)
+          ..color = AppColors.white.withValues(alpha: 0.05)
           ..style = PaintingStyle.stroke,
       );
     }
 
     // Nodes and Ecosystem Labels
-    final nodePaint = Paint()..color = Colors.white;
+    final nodePaint = Paint()..color = AppColors.white;
     const nodeCount = 12;
     for (int i = 0; i < nodeCount; i++) {
       double angle = (i * 2 * pi) / nodeCount + (animationValue * 0.2 * pi);
@@ -228,7 +228,7 @@ class MachinePainter extends CustomPainter {
       textPainter.text = TextSpan(
         text: labels[i % labels.length],
         style: TextStyle(
-          color: Colors.white.withValues(alpha: 0.7),
+          color: AppColors.white.withValues(alpha: 0.7),
           fontSize: (isMobile ? 8 : 10) * scale,
           fontWeight: FontWeight.bold,
           fontFamily: 'monospace',

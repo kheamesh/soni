@@ -19,7 +19,7 @@ class HeroExperience extends StatelessWidget {
     return Container(
       height: isDesktop ? size.height : null,
       width: double.infinity,
-      color: Colors.transparent,
+      color: AppColors.transparent,
       padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1, vertical: isDesktop ? 0 : Get.height * 0.12),
       child: Stack(
         children: [
@@ -341,7 +341,7 @@ class PhonePainter extends CustomPainter {
     canvas.drawRRect(
       screenRRect,
       paint
-        ..color = Colors.black.withValues(alpha: 0.8)
+        ..color = AppColors.black.withValues(alpha: 0.8)
         ..style = PaintingStyle.fill,
     );
 
@@ -377,9 +377,9 @@ class ScanlineOverlay extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.transparent,
+                      AppColors.transparent,
                       AppColors.textPrimary.withValues(alpha: 0.05),
-                      Colors.transparent,
+                      AppColors.transparent,
                     ],
                     stops: const [0.0, 0.5, 1.0],
                   ),

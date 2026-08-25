@@ -41,9 +41,9 @@ class StatsSection extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
-              color: Colors.white70,
+              color: AppColors.textPrimary.withValues(alpha: 0.7),
               letterSpacing: 1.2,
             ),
           ),

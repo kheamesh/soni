@@ -61,8 +61,8 @@ class MainLayout extends StatelessWidget {
                   ),
                   child: Text(
                     label,
-                    style: const TextStyle(
-                      color: Colors.white70,
+                    style: TextStyle(
+                      color: AppColors.textPrimary.withValues(alpha: 0.7),
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 2,
@@ -85,7 +85,7 @@ class MainLayout extends StatelessWidget {
     final navCtrl = Get.put(NavController());
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.background,
       body: Stack(
         children: [
           // LAYER 1: Background Stars (Decorative)
@@ -168,7 +168,7 @@ class MainLayout extends StatelessWidget {
                         Text(
                               AppStrings.userId,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: AppColors.white,
                                 fontSize: Responsive.isMobile(context)
                                     ? 18
                                     : 24,
@@ -253,7 +253,7 @@ class MainLayout extends StatelessWidget {
                     Container(
                       width: 300,
                       height: 1,
-                      color: Colors.white12,
+                      color: AppColors.whiteTransparent.withValues(alpha: 0.1),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child:
