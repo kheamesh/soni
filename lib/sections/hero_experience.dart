@@ -4,7 +4,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import '../core/app_colors.dart';
 import '../core/app_strings.dart';
-import '../core/app_icons.dart';
 import '../utils/responsive.dart';
 import '../controllers/hero_experience_controller.dart';
 
