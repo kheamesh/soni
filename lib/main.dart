@@ -11,10 +11,10 @@ import 'widgets/custom_cursor.dart';
 import 'sections/hero_experience.dart';
 import 'sections/digital_gallery.dart';
 import 'sections/engine_room.dart';
-import 'sections/technology_constellation.dart';
 import 'sections/thinking_space.dart';
 import 'sections/the_lab.dart';
 import 'sections/transmission_hub.dart';
+import 'sections/footer_experience.dart';
 import 'controllers/app_controller.dart';
 import 'controllers/nav_controller.dart';
 
@@ -102,10 +102,10 @@ class MainLayout extends StatelessWidget {
                   HeroExperience(key: navCtrl.heroKey),
                   DigitalGallery(key: navCtrl.workKey),
                   EngineRoom(key: navCtrl.craftKey),
-                  TechnologyConstellation(key: navCtrl.codeKey),
                   ThinkingSpace(key: navCtrl.thinkingKey),
                   TheLab(key: navCtrl.labKey),
                   TransmissionHub(key: navCtrl.contactKey),
+                  const FooterExperience(),
                   const SizedBox(height: 100),
                 ],
               ).animate().fadeIn(duration: const Duration(seconds: 1)),
@@ -121,23 +121,42 @@ class MainLayout extends StatelessWidget {
                 children: [
                   // Top Right Nav
                   if (!Responsive.isMobile(context))
-                  Positioned(
-                        top: 40,
-                        right: 40,
-                        child: Row(
-                          children: [
-                            _buildNavButton(AppStrings.navMe, navCtrl.heroKey, navCtrl),
-                            _buildNavButton(AppStrings.navWork, navCtrl.workKey, navCtrl),
-                            _buildNavButton(AppStrings.navCraft, navCtrl.craftKey, navCtrl),
-                            _buildNavButton(AppStrings.navLab, navCtrl.labKey, navCtrl),
-                            _buildNavButton(AppStrings.navCode, navCtrl.codeKey, navCtrl),
-                            _buildNavButton(AppStrings.navContact, navCtrl.contactKey, navCtrl),
-                          ],
-                        ),
-                      )
-                      .animate()
-                      .fadeIn(delay: const Duration(seconds: 1))
-                      .slideX(begin: 0.2, end: 0),
+                    Positioned(
+                          top: 40,
+                          right: 40,
+                          child: Row(
+                            children: [
+                              _buildNavButton(
+                                AppStrings.navMe,
+                                navCtrl.heroKey,
+                                navCtrl,
+                              ),
+                              _buildNavButton(
+                                AppStrings.navWork,
+                                navCtrl.workKey,
+                                navCtrl,
+                              ),
+                              _buildNavButton(
+                                AppStrings.navCraft,
+                                navCtrl.craftKey,
+                                navCtrl,
+                              ),
+                              _buildNavButton(
+                                AppStrings.navLab,
+                                navCtrl.labKey,
+                                navCtrl,
+                              ),
+                              _buildNavButton(
+                                AppStrings.navContact,
+                                navCtrl.contactKey,
+                                navCtrl,
+                              ),
+                            ],
+                          ),
+                        )
+                        .animate()
+                        .fadeIn(delay: const Duration(seconds: 1))
+                        .slideX(begin: 0.2, end: 0),
 
                   // Top Left Identity
                   Positioned(
@@ -150,7 +169,9 @@ class MainLayout extends StatelessWidget {
                               AppStrings.userId,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: Responsive.isMobile(context) ? 18 : 24,
+                                fontSize: Responsive.isMobile(context)
+                                    ? 18
+                                    : 24,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 4,
                               ),
@@ -175,34 +196,34 @@ class MainLayout extends StatelessWidget {
 
                   // Bottom Right Status
                   if (!Responsive.isMobile(context))
-                  Positioned(
-                    bottom: 40,
-                    right: 40,
-                    child:
-                        const Text(
-                              AppStrings.buildStatus,
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                color: AppColors.primary,
-                                fontSize: 10,
-                                height: 1.5,
-                                letterSpacing: 2,
-                                fontFamily: 'monospace',
+                    Positioned(
+                      bottom: 40,
+                      right: 40,
+                      child:
+                          const Text(
+                                AppStrings.buildStatus,
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                  color: AppColors.primary,
+                                  fontSize: 10,
+                                  height: 1.5,
+                                  letterSpacing: 2,
+                                  fontFamily: 'monospace',
+                                ),
+                              )
+                              .animate()
+                              .fadeIn(delay: const Duration(milliseconds: 700))
+                              .shake(
+                                hz: 4,
+                                duration: const Duration(milliseconds: 400),
+                              )
+                              .custom(
+                                builder: (context, value, child) => Opacity(
+                                  opacity: value < 0.5 ? 0.8 : 1.0,
+                                  child: child,
+                                ),
                               ),
-                            )
-                            .animate()
-                            .fadeIn(delay: const Duration(milliseconds: 700))
-                            .shake(
-                              hz: 4,
-                              duration: const Duration(milliseconds: 400),
-                            )
-                            .custom(
-                              builder: (context, value, child) => Opacity(
-                                opacity: value < 0.5 ? 0.8 : 1.0,
-                                child: child,
-                              ),
-                            ),
-                  ),
+                    ),
                 ],
               ),
             );

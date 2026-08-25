@@ -31,7 +31,7 @@ class TheLab extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            AppStrings.labDescription,
+            AppStrings.engineeringLab,
             style: TextStyle(
               color: Colors.white38,
               fontSize: isMobile ? 10 : 12,
@@ -109,7 +109,7 @@ class TheLab extends StatelessWidget {
                                     child: Transform.rotate(
                                       angle: obj.rotation,
                                       child: CursorHoverRegion(
-                                        text: "GRAB",
+                                        text: AppStrings.grab,
                                         child: Container(
                                           width: size,
                                           height: size,

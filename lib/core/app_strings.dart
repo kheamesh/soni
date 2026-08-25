@@ -24,6 +24,7 @@ class AppStrings {
   static const String expTag3 = "CLEAN ARCHITECTURE EXPERT";
 
   // Digital Gallery
+  static const String archive = "ARCHIVE";
   static const String galleryTitle = "DIGITAL ARCHIVES";
   static const String inspect = "INSPECT";
   static const String storyHeader = "ENGINEERING_STORY // ";
@@ -39,7 +40,7 @@ class AppStrings {
   static const String projectAlphaBuild = "Developed with Clean Architecture, utilizing custom animations and a robust state management system to ensure a seamless shopping experience.";
   static const String projectAlphaResult = "Delivered a high-performance app with integrated payment gateways and an elegant UI tailored for luxury jewelry.";
   
-  static const String projectBetaTitle = "CLASSIC ARCHITECTURE";
+  static const String projectBetaTitle = "CLASSIC DIMAOND";
   static const String projectBetaDesc = "A sophisticated Flutter architectural foundation.";
   static const String projectBetaProblem = "Scalability issues in complex apps often stem from tightly coupled UI and business logic.";
   static const String projectBetaBuild = "Built a robust 'Classic' framework focused on modularity, high performance, and strict clean architecture principles.";
@@ -66,12 +67,24 @@ class AppStrings {
   static const String viewSource = "VIEW_SOURCE";
 
   // Engine Room
+  static const String engineMainTitle = "THE ENGINE & CORE";
+  static const String engineDescription = "Visualizing the heartbeat of scalable engineering.";
   static const String engineTitle = "THE ENGINE ROOM";
   static const String engineSubTitle = "Aapka high-performance ecosystem yahan se start hota hai.";
+  static const String techCoreTitle = "THE TECH CORE";
+  
   static const String archLabel = "SOLID_ARCHITECTURE";
   static const String stateLabel = "REACTIVE_STATE";
   static const String speedLabel = "OPTIMIZED_PERFORMANCE";
   static const String secureLabel = "ENCRYPTED_SECURITY";
+  static const String scalabilityLabel = "SCALABILITY";
+  static const String modularCodeLabel = "MODULAR_CODE";
+  static const String unitTestingLabel = "UNIT_TESTING";
+  static const String cicdPipelineLabel = "CI_CD_PIPELINE";
+  static const String reusableCompLabel = "REUSABLE_COMPONENTS";
+  static const String smoothUxLabel = "SMOOTH_UX";
+  static const String restApiLabel = "REST_API";
+  static const String firebaseLogicLabel = "FIREBASE_LOGIC";
 
   // Technology Constellation
   static const String techCore = "CORE";
@@ -94,20 +107,51 @@ class AppStrings {
   static const String whatIfGlitch = "Pixels were autonomous entities with their own gravity.";
 
   // The Lab
+  static const String grab = "GRAB";
   static const String labTitle = "THE LAB // PHYSICS_PLAYGROUND";
   static const String labSubtitle = "INTERACT WITH THE CORE COMPONENTS";
   static const String labDescription = "EXPERIMENTAL_ZONE: Transform and spin components within the 3D Physics Box.";
+  static const String engineeringLab = "ENGINEERING_LAB: Transform and spin components within the 3D Physics Box.";
 
   // Transmission Hub
   static const String transmissionTitle = "ESTABLISH CONNECTION";
+  static const String labelName = "NAME";
+  static const String labelSurname = "SURNAME";
+  static const String labelEmail = "EMAIL";
+  static const String labelNotes = "NOTES";
+  static const String hintEnterName = "Enter your first name";
+  static const String hintEnterSurname = "Enter your last name";
+  static const String hintEnterEmail = "Enter your secure email";
+  static const String hintEnterNotes = "Enter any additional notes or details...";
   static const String optionWeb = "WEB";
   static const String optionMobile = "MOBILE";
   static const String optionBeyond = "BEYOND";
+  static const String protocolSelect = "PROTOCOL_SELECT";
+  static const String selectLabel = "SELECT";
   static const String transmit = "TRANSMIT";
   static const String uplinking = "UPLINKING";
+  static const String uplink = "UPLINK";
   static const String uplinkActive = "DATA_UPLINK_ACTIVE";
   static const String sendTransmission = "SEND TRANSMISSION";
   static const String binary1 = "10101001";
   static const String binary2 = "01101100";
   static const String open = "OPEN";
+
+  // Footer Experience
+  static const String footerTitle = "THE EXPERIENCE ENDS HERE.";
+  static const String footerSubTitle = "THE NEXT ONE COULD BE YOURS.";
+  static const String footerCopyright = "DESIGN & CODE COPYRIGHT © 2026 // HANDCRAFTED WITH FLUTTER ENGINE";
+  static const String terminalReady = "[SYSTEM] CORE_LOADED: Ready for new transmissions.";
+  static const String terminalSync = "[INFO] SYNC_COMPLETE: Developer identity synchronized.";
+  static const String terminalLab = "[STATUS] LAB_ACTIVE: Interactive physics engine online.";
+  static const String systemLogs = "SYSTEM_LOGS";
+  static const String ksSignature = "KS.";
+  static const String githubLabel = "GITHUB_LINK";
+  static const String linkedinLabel = "LINKEDIN_SYNC";
+  static const String emailLabel = "SECURE_MAIL";
+
+  // Social Links
+  static const String githubUrl = "https://github.com/Weingeniouss";
+  static const String linkedinUrl = "https://linkedin.com";
+  static const String emailUrl = "mailto:kheamesh@example.com";
 }

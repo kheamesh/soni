@@ -10,4 +10,11 @@ class AppColors {
   static const Color glassBorder = Color(0x1AFFFFFF);
   static const Color particleColor = Color(0x3300B2FF);
   static const Color laboratoryBg = Color(0xFF050505);
+  static const Color whiteTransparent = Color(0x08FFFFFF);
+  static const Color whiteSemiTransparent = Color(0xE6FFFFFF);
+  
+  // Terminal Colors
+  static const Color terminalRed = Colors.red;
+  static const Color terminalAmber = Colors.amber;
+  static const Color terminalGreen = Colors.green;
 }

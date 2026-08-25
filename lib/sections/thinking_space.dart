@@ -15,19 +15,19 @@ class ThinkingSpace extends StatelessWidget {
     final isMobile = Responsive.isMobile(context);
     
     return Container(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? 60 : 100),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? Get.height * 0.06 : Get.height * 0.1),
       child: Column(
         children: [
           Text(
             AppStrings.mentalSandbox,
             style: TextStyle(
-              color: Colors.white, 
+              color: AppColors.textPrimary, 
               fontSize: isMobile ? 12 : 14, 
               letterSpacing: isMobile ? 5 : 10, 
               fontWeight: FontWeight.w300
             ),
           ),
-          SizedBox(height: isMobile ? 60 : 100),
+          SizedBox(height: isMobile ? Get.height * 0.08 : Get.height * 0.12),
           QuestionBlock(
             id: "why",
             question: AppStrings.whyQuestion, 
@@ -35,7 +35,7 @@ class ThinkingSpace extends StatelessWidget {
             glitchAnswer: AppStrings.whyGlitch,
             isMobile: isMobile,
           ),
-          SizedBox(height: isMobile ? 60 : 100),
+          SizedBox(height: isMobile ? Get.height * 0.08 : Get.height * 0.12),
           QuestionBlock(
             id: "whatif",
             question: AppStrings.whatIfQuestion, 
@@ -84,9 +84,9 @@ class QuestionBlock extends StatelessWidget {
             return Text(
               question,
               style: TextStyle(
-                fontSize: isMobile ? 40 : 80,
+                fontSize: isMobile ? Get.width * 0.12 : Get.width * 0.06,
                 fontWeight: FontWeight.w900,
-                color: Colors.white.withValues(alpha: 0.05),
+                color: AppColors.textPrimary.withValues(alpha: 0.05),
               ),
             ).animate(target: revealed ? 1 : 0).tint(color: AppColors.primary);
           }),
@@ -97,9 +97,9 @@ class QuestionBlock extends StatelessWidget {
             if (!revealed) return const SizedBox.shrink();
             
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
               child: SizedBox(
-                height: isMobile ? 80 : 60,
+                height: isMobile ? Get.height * 0.1 : Get.height * 0.08,
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
                   transitionBuilder: (child, animation) {
@@ -110,7 +110,7 @@ class QuestionBlock extends StatelessWidget {
                     key: ValueKey(glitched),
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: glitched ? AppColors.accent : Colors.white, 
+                      color: glitched ? AppColors.accent : AppColors.textPrimary, 
                       fontSize: isMobile ? 16 : 20, 
                       fontStyle: FontStyle.italic,
                       fontFamily: glitched ? 'monospace' : null,

@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import '../core/app_colors.dart';
 import '../core/app_strings.dart';
+import '../core/app_icons.dart';
 import '../utils/responsive.dart';
 import '../controllers/hero_experience_controller.dart';
 
@@ -19,7 +20,7 @@ class HeroExperience extends StatelessWidget {
       height: isDesktop ? size.height : null,
       width: double.infinity,
       color: Colors.transparent,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.1, vertical: isDesktop ? 0 : 120),
+      padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1, vertical: isDesktop ? 0 : Get.height * 0.12),
       child: Stack(
         children: [
           Positioned.fill(
@@ -33,7 +34,7 @@ class HeroExperience extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildEngineerInfo(context, isDesktop: false),
-                const SizedBox(height: 60),
+                SizedBox(height: Get.height * 0.06),
                 const SmartphoneAssembler(),
               ],
             ),
@@ -44,7 +45,7 @@ class HeroExperience extends StatelessWidget {
                   flex: 3,
                   child: _buildEngineerInfo(context, isDesktop: true),
                 ),
-                const SizedBox(width: 50),
+                SizedBox(width: Get.width * 0.04),
                 const Expanded(
                   flex: 2,
                   child: Center(child: SmartphoneAssembler()),
@@ -62,9 +63,9 @@ class HeroExperience extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
       children: [
-        const Text(
+        Text(
           AppStrings.heroEngineer,
-          style: TextStyle(
+          style: const TextStyle(
                 color: AppColors.primary,
                 fontSize: 14,
                 letterSpacing: 8,
@@ -80,7 +81,7 @@ class HeroExperience extends StatelessWidget {
           TextStyle(
             fontSize: isDesktop ? 80 : 45,
             fontWeight: FontWeight.w900,
-            color: Colors.white,
+            color: AppColors.textPrimary,
             height: 1.1,
             letterSpacing: 2,
           ),
@@ -92,7 +93,7 @@ class HeroExperience extends StatelessWidget {
           textAlign: isDesktop ? TextAlign.left : TextAlign.center,
           style: TextStyle(
             fontSize: isDesktop ? 22 : 16,
-            color: Colors.white70,
+            color: AppColors.textPrimary.withValues(alpha: 0.7),
             height: 1.5,
           ),
         ).animate().fadeIn(delay: const Duration(seconds: 1)).slideY(begin: 0.2, end: 0),
@@ -143,8 +144,8 @@ class HeroExperience extends StatelessWidget {
           Flexible(
             child: Text(
               text,
-              style: const TextStyle(
-                color: Colors.white54,
+              style: TextStyle(
+                color: AppColors.textPrimary.withValues(alpha: 0.5),
                 fontSize: 12,
                 letterSpacing: 2,
                 fontWeight: FontWeight.bold,
@@ -377,7 +378,7 @@ class ScanlineOverlay extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.transparent,
-                      Colors.white.withValues(alpha: 0.05),
+                      AppColors.textPrimary.withValues(alpha: 0.05),
                       Colors.transparent,
                     ],
                     stops: const [0.0, 0.5, 1.0],

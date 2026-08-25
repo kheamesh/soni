@@ -1,19 +1,20 @@
-// ignore_for_file: unused_local_variable
-
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:math';
 import '../core/app_colors.dart';
 import '../core/app_strings.dart';
 import '../utils/responsive.dart';
 import '../controllers/engine_controller.dart';
+import '../controllers/constellation_controller.dart';
+import 'technology_constellation.dart';
 
 class EngineRoom extends StatelessWidget {
   const EngineRoom({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(EngineController());
+    final engineController = Get.put(EngineController());
+    Get.put(ConstellationController());
     final isMobile = Responsive.isMobile(context);
     final size = MediaQuery.of(context).size;
 
@@ -25,7 +26,7 @@ class EngineRoom extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            AppStrings.engineTitle,
+            AppStrings.engineMainTitle,
             style: TextStyle(
               color: Colors.white.withValues(alpha: 0.9),
               fontSize: isMobile ? 18 : 24,
@@ -34,48 +35,107 @@ class EngineRoom extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          // Text(
-          //   AppStrings.engineSubTitle,
-          //   style: TextStyle(
-          //     color: Colors.white38,
-          //     fontSize: isMobile ? 10 : 12,
-          //     letterSpacing: 2
-          //   ),
-          // ),
-          SizedBox(height: isMobile ? 30 : 50),
-          SizedBox(
-            height: isMobile ? 400 : 600,
-            width: double.infinity,
-            child: ExcludeSemantics(
-              child: AnimatedBuilder(
-                animation: controller.animationController,
-                builder: (context, child) {
-                  return CustomPaint(
-                    painter: MachinePainter(
-                      controller.animationController.value,
-                      isMobile: isMobile,
-                      screenWidth: size.width,
-                      labels: [
-                        AppStrings.archLabel,
-                        AppStrings.stateLabel,
-                        AppStrings.speedLabel,
-                        AppStrings.secureLabel,
-                        "SCALABILITY",
-                        "MODULAR_CODE",
-                        "UNIT_TESTING",
-                        "CI_CD_PIPELINE",
-                        "REUSABLE_COMPONENTS",
-                        "SMOOTH_UX",
-                        "REST_API",
-                        "FIREBASE_LOGIC",
-                      ],
-                    ),
-                  );
-                },
-              ),
+          Text(
+            AppStrings.engineDescription,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white38,
+              fontSize: isMobile ? 10 : 12,
+              letterSpacing: 2,
+            ),
+          ),
+          SizedBox(height: isMobile ? 40 : 80),
+          Responsive(
+            mobile: Column(
+              children: [
+                _buildEngineVisual(engineController, isMobile, size.width),
+                const SizedBox(height: 60),
+                const TechnologyConstellation(),
+              ],
+            ),
+            desktop: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        AppStrings.engineTitle,
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 16,
+                          letterSpacing: 4,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      _buildEngineVisual(engineController, false, size.width),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 1,
+                  height: 400,
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      const Text(
+                        AppStrings.techCoreTitle,
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 16,
+                          letterSpacing: 4,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const TechnologyConstellation(),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildEngineVisual(
+    EngineController controller,
+    bool isMobile,
+    double screenWidth,
+  ) {
+    return SizedBox(
+      height: isMobile ? 400 : 500,
+      width: double.infinity,
+      child: ExcludeSemantics(
+        child: AnimatedBuilder(
+          animation: controller.animationController,
+          builder: (context, child) {
+            return CustomPaint(
+              painter: MachinePainter(
+                controller.animationController.value,
+                isMobile: isMobile,
+                screenWidth: screenWidth,
+                labels: [
+                  AppStrings.archLabel,
+                  AppStrings.stateLabel,
+                  AppStrings.speedLabel,
+                  AppStrings.secureLabel,
+                  AppStrings.scalabilityLabel,
+                  AppStrings.modularCodeLabel,
+                  AppStrings.unitTestingLabel,
+                  AppStrings.cicdPipelineLabel,
+                  AppStrings.reusableCompLabel,
+                  AppStrings.smoothUxLabel,
+                  AppStrings.restApiLabel,
+                  AppStrings.firebaseLogicLabel,
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -97,7 +157,7 @@ class MachinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final scale = isMobile ? 0.5 : (screenWidth < 1200 ? 0.7 : 1.0);
+    final scale = isMobile ? 0.4 : (screenWidth < 1200 ? 0.6 : 0.8);
     final textPainter = TextPainter(textDirection: TextDirection.ltr);
 
     final paint = Paint()
@@ -120,11 +180,9 @@ class MachinePainter extends CustomPainter {
         ..style = PaintingStyle.fill,
     );
 
-    // Rotating Gears
+    // Rotating Gears (Background reference)
     for (int i = 0; i < 3; i++) {
       final radius = (80.0 + i * 100) * scale;
-      final rotation = (i % 2 == 0 ? 1 : -1) * animationValue * 2 * pi;
-
       canvas.drawCircle(
         center,
         radius,
@@ -179,20 +237,17 @@ class MachinePainter extends CustomPainter {
       );
       textPainter.layout();
 
-      // Calculate text position to be outside the node
       Offset textOffset = Offset(
         nodePos.dx + (cos(angle) * 15),
         nodePos.dy + (sin(angle) * 15) - (textPainter.height / 2),
       );
 
-      // Adjust alignment based on which side of the center it is
       if (cos(angle) < 0) {
         textOffset = Offset(
           textOffset.dx - textPainter.width - 20,
           textOffset.dy,
         );
       }
-
       textPainter.paint(canvas, textOffset);
     }
   }

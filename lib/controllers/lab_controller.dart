@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../core/app_colors.dart';
+import '../core/app_icons.dart';
 
 class LabController extends GetxController with GetSingleTickerProviderStateMixin {
   late AnimationController physicsController;
@@ -19,16 +20,16 @@ class LabController extends GetxController with GetSingleTickerProviderStateMixi
     physicsController.addListener(_updatePhysics);
     
     final techData = [
-      {'icon': Icons.flutter_dash, 'name': 'Flutter'},
-      {'icon': Icons.terminal, 'name': 'Dart'},
-      {'icon': Icons.storage, 'name': 'Firebase'},
-      {'icon': Icons.android, 'name': 'Android'},
-      {'icon': Icons.apple, 'name': 'iOS'},
-      {'icon': Icons.code, 'name': 'CleanCode'},
-      {'icon': Icons.hub, 'name': 'Git'},
-      {'icon': Icons.memory, 'name': 'Logic'},
-      {'icon': Icons.security, 'name': 'Auth'},
-      {'icon': Icons.speed, 'name': 'Perf'},
+      {'icon': AppIcons.flutter, 'name': 'Flutter'},
+      {'icon': AppIcons.dart, 'name': 'Dart'},
+      {'icon': AppIcons.storage, 'name': 'Firebase'},
+      {'icon': AppIcons.android, 'name': 'Android'},
+      {'icon': AppIcons.apple, 'name': 'iOS'},
+      {'icon': AppIcons.code, 'name': 'CleanCode'},
+      {'icon': AppIcons.hub, 'name': 'Git'},
+      {'icon': AppIcons.memory, 'name': 'Logic'},
+      {'icon': AppIcons.security, 'name': 'Auth'},
+      {'icon': AppIcons.speed, 'name': 'Perf'},
     ];
 
     for (int i = 0; i < techData.length; i++) {
