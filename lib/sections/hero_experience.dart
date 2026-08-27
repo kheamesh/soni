@@ -6,12 +6,14 @@ import '../core/app_colors.dart';
 import '../core/app_strings.dart';
 import '../utils/responsive.dart';
 import '../controllers/hero_experience_controller.dart';
+import '../widgets/custom_cursor.dart';
 
 class HeroExperience extends StatelessWidget {
   const HeroExperience({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(HeroExperienceController());
     final size = MediaQuery.of(context).size;
     final isDesktop =
         Responsive.isDesktop(context) ||
@@ -108,7 +110,62 @@ class HeroExperience extends StatelessWidget {
         _buildInfoTag(AppStrings.expTag1),
         _buildInfoTag(AppStrings.expTag2),
         _buildInfoTag(AppStrings.expTag3),
+        const SizedBox(height: 40),
+        _buildCVButtons(context, isDesktop),
       ],
+    );
+  }
+
+  Widget _buildCVButtons(BuildContext context, bool isDesktop) {
+    final controller = Get.find<HeroExperienceController>();
+    return Row(
+      mainAxisAlignment:
+          isDesktop ? MainAxisAlignment.start : MainAxisAlignment.center,
+      children: [
+        _buildActionButton(
+          label: AppStrings.viewCV,
+          onPressed: controller.viewCV,
+          isPrimary: true,
+        ),
+        const SizedBox(width: 20),
+        _buildActionButton(
+          label: AppStrings.downloadCV,
+          onPressed: controller.downloadCV,
+          isPrimary: false,
+        ),
+      ],
+    ).animate().fadeIn(delay: const Duration(milliseconds: 1500)).slideY(
+      begin: 0.2,
+      end: 0,
+    );
+  }
+
+  Widget _buildActionButton({
+    required String label,
+    required VoidCallback onPressed,
+    bool isPrimary = true,
+  }) {
+    return CursorHoverRegion(
+      text: label,
+      child: OutlinedButton(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          foregroundColor: isPrimary ? AppColors.black : AppColors.primary,
+          backgroundColor:
+              isPrimary ? AppColors.primary : AppColors.transparent,
+          side: const BorderSide(color: AppColors.primary, width: 2),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+        ),
+        child: Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 2,
+          ),
+        ),
+      ),
     );
   }
 
@@ -177,7 +234,7 @@ class SmartphoneAssembler extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(HeroExperienceController());
+    final controller = Get.find<HeroExperienceController>();
     final isMobile = Responsive.isMobile(context);
     final scale = isMobile ? 0.7 : 1.0;
 

@@ -23,6 +23,17 @@ class AppStrings {
   static const String expTag2 = "FLUTTER & DART SPECIALIST";
   static const String expTag3 = "CLEAN ARCHITECTURE EXPERT";
 
+  static const String viewCV = "VIEW CV";
+  static const String downloadCV = "DOWNLOAD CV";
+  static const String resumeAsset = "assets/cv/Kheamesh soni.pdf";
+  static const String cvPreviewTitle = "CV PREVIEW // IN-APP";
+  static const String cvDownloadName = "Kheamesh_Soni_CV";
+  static const String cvDownloadSuccess = "CV Downloaded successfully";
+  static const String cvOpenError = "Could not open CV";
+  static const String cvDownloadError = "Could not download CV";
+  static const String successLabel = "Success";
+  static const String errorLabel = "Error";
+
   // About Section
   static const String aboutTitle = "Transforming Ideas into Digital Reality";
   static const String aboutSubtitle = "About Me";
