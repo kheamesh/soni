@@ -13,19 +13,22 @@ class HeroExperience extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isDesktop = Responsive.isDesktop(context) || Responsive.isExtraLargeDesktop(context);
+    final isDesktop =
+        Responsive.isDesktop(context) ||
+        Responsive.isExtraLargeDesktop(context);
 
     return Container(
       height: isDesktop ? size.height : null,
       width: double.infinity,
       color: AppColors.transparent,
-      padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1, vertical: isDesktop ? 0 : Get.height * 0.12),
+      padding: EdgeInsets.symmetric(
+        horizontal: Get.width * 0.1,
+        vertical: isDesktop ? 0 : Get.height * 0.12,
+      ),
       child: Stack(
         children: [
           Positioned.fill(
-            child: const ExcludeSemantics(
-              child: ScanlineOverlay(),
-            ),
+            child: const ExcludeSemantics(child: ScanlineOverlay()),
           ),
 
           Responsive(
@@ -60,11 +63,13 @@ class HeroExperience extends StatelessWidget {
   Widget _buildEngineerInfo(BuildContext context, {required bool isDesktop}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      crossAxisAlignment: isDesktop
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.center,
       children: [
         Text(
-          AppStrings.heroEngineer,
-          style: const TextStyle(
+              AppStrings.heroEngineer,
+              style: const TextStyle(
                 color: AppColors.primary,
                 fontSize: 14,
                 letterSpacing: 8,
@@ -88,14 +93,17 @@ class HeroExperience extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         Text(
-          AppStrings.heroDescription,
-          textAlign: isDesktop ? TextAlign.left : TextAlign.center,
-          style: TextStyle(
-            fontSize: isDesktop ? 22 : 16,
-            color: AppColors.textPrimary.withValues(alpha: 0.7),
-            height: 1.5,
-          ),
-        ).animate().fadeIn(delay: const Duration(seconds: 1)).slideY(begin: 0.2, end: 0),
+              AppStrings.heroDescription,
+              textAlign: isDesktop ? TextAlign.left : TextAlign.center,
+              style: TextStyle(
+                fontSize: isDesktop ? 22 : 16,
+                color: AppColors.textPrimary.withValues(alpha: 0.7),
+                height: 1.5,
+              ),
+            )
+            .animate()
+            .fadeIn(delay: const Duration(seconds: 1))
+            .slideY(begin: 0.2, end: 0),
         const SizedBox(height: 40),
         _buildInfoTag(AppStrings.expTag1),
         _buildInfoTag(AppStrings.expTag2),
@@ -111,11 +119,15 @@ class HeroExperience extends StatelessWidget {
     required bool isDesktop,
   }) {
     return Column(
-      crossAxisAlignment: isDesktop ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+      crossAxisAlignment: isDesktop
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.center,
       children: text.split('\n').map((line) {
         return Row(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: isDesktop ? MainAxisAlignment.start : MainAxisAlignment.center,
+          mainAxisAlignment: isDesktop
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.center,
           children: line.split('').asMap().entries.map((entry) {
             return Text(entry.value, style: style)
                 .animate(delay: delay + Duration(milliseconds: entry.key * 50))
@@ -134,26 +146,29 @@ class HeroExperience extends StatelessWidget {
 
   Widget _buildInfoTag(String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(width: 6, height: 6, color: AppColors.primary),
-          const SizedBox(width: 15),
-          Flexible(
-            child: Text(
-              text,
-              style: TextStyle(
-                color: AppColors.textPrimary.withValues(alpha: 0.5),
-                fontSize: 12,
-                letterSpacing: 2,
-                fontWeight: FontWeight.bold,
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(width: 6, height: 6, color: AppColors.primary),
+              const SizedBox(width: 15),
+              Flexible(
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    color: AppColors.textPrimary.withValues(alpha: 0.5),
+                    fontSize: 12,
+                    letterSpacing: 2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    ).animate().fadeIn(delay: const Duration(milliseconds: 1200)).slideX(begin: 0.1, end: 0);
+        )
+        .animate()
+        .fadeIn(delay: const Duration(milliseconds: 1200))
+        .slideX(begin: 0.1, end: 0);
   }
 }
 
@@ -216,7 +231,8 @@ class SmartphoneAssembler extends StatelessWidget {
                 ),
 
                 ...List.generate(cardCount, (i) {
-                  double angle = (i * 2 * pi / cardCount) + (animationValue * pi);
+                  double angle =
+                      (i * 2 * pi / cardCount) + (animationValue * pi);
                   double radius = 180 + sin(animationValue * 2 * pi + i) * 30;
 
                   double x = 200 + cos(angle) * radius;
@@ -225,16 +241,20 @@ class SmartphoneAssembler extends StatelessWidget {
                   return Positioned(
                     left: x - 25,
                     top: y - 25,
-                    child:
-                        ExcludeSemantics(
-                          child: Container(
+                    child: ExcludeSemantics(
+                      child:
+                          Container(
                                 width: 50,
                                 height: 50,
                                 decoration: BoxDecoration(
-                                  color: AppColors.secondary.withValues(alpha: 0.2),
+                                  color: AppColors.secondary.withValues(
+                                    alpha: 0.2,
+                                  ),
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
-                                    color: AppColors.primary.withValues(alpha: 0.5),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.5,
+                                    ),
                                   ),
                                   boxShadow: [
                                     BoxShadow(
@@ -245,7 +265,9 @@ class SmartphoneAssembler extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                child: const Center(child: FlutterLogo(size: 25)),
+                                child: const Center(
+                                  child: FlutterLogo(size: 25),
+                                ),
                               )
                               .animate(onPlay: (c) => c.repeat(reverse: true))
                               .moveY(
@@ -254,7 +276,7 @@ class SmartphoneAssembler extends StatelessWidget {
                                 duration: const Duration(seconds: 2),
                                 curve: Curves.easeInOut,
                               ),
-                        ),
+                    ),
                   );
                 }),
               ],
@@ -303,7 +325,10 @@ class CodeSimulator extends StatelessWidget {
           }).toList(),
         )
         .animate(onPlay: (c) => c.repeat())
-        .shimmer(delay: const Duration(seconds: 3), duration: const Duration(seconds: 2));
+        .shimmer(
+          delay: const Duration(seconds: 3),
+          duration: const Duration(seconds: 2),
+        );
   }
 }
 

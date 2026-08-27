@@ -87,6 +87,12 @@ class AppStrings {
   static const String projectMetalBuild = "Integrated secure local storage and cloud syncing with complex item categorization and barcode scanning support.";
   static const String projectMetalResult = "Reduced inventory leakage by 30% and provided jewelers with an instant overview of their stock and valuation.";
 
+  static const String projectAccretiveTitle = "ACCRETIVE LABS";
+  static const String projectAccretiveDesc = "Experimental UI patterns and sensory design systems.";
+  static const String projectAccretiveProblem = "Design often feels flat and disconnected from the underlying logic.";
+  static const String projectAccretiveBuild = "A series of layered components using CustomPainters and real-time animations to create depth.";
+  static const String projectAccretiveResult = "A library of components that respond to user presence with evolving visual states.";
+
   static const String viewSource = "VIEW_SOURCE";
 
   // Engine Room
@@ -138,6 +144,7 @@ class AppStrings {
 
   // Transmission Hub
   static const String transmissionTitle = "ESTABLISH CONNECTION";
+  static const String insertInfo = "INSERT YOUR INFORMATION";
   static const String labelName = "NAME";
   static const String labelSurname = "SURNAME";
   static const String labelEmail = "EMAIL";

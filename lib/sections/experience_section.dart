@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:soni/core/app_strings.dart';
 import '../core/app_colors.dart';
 import '../widgets/section_header.dart';
 import '../widgets/glass_card.dart';
@@ -64,7 +65,10 @@ class ExperienceItem extends StatelessWidget {
                 ),
                 Text(
                   exp['company']!,
-                  style: TextStyle(color: AppColors.textPrimary.withValues(alpha: 0.38), fontSize: 14),
+                  style: TextStyle(
+                    color: AppColors.textPrimary.withValues(alpha: 0.38),
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.1, end: 0),
@@ -143,7 +147,9 @@ class ExperienceItem extends StatelessWidget {
                             Text(
                               exp['description']!,
                               style: TextStyle(
-                                color: AppColors.textPrimary.withValues(alpha: 0.7),
+                                color: AppColors.textPrimary.withValues(
+                                  alpha: 0.7,
+                                ),
                                 height: 1.6,
                                 fontSize: 15,
                               ),

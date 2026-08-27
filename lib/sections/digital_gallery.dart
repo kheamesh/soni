@@ -9,6 +9,7 @@ import '../utils/responsive.dart';
 import '../controllers/gallery_controller.dart';
 import '../widgets/gallery_card.dart';
 import '../widgets/tech_painters.dart';
+import '../widgets/accretive_data_feed.dart';
 
 class DigitalGallery extends StatefulWidget {
   const DigitalGallery({super.key});
@@ -165,7 +166,7 @@ class _DigitalGalleryState extends State<DigitalGallery> {
                   padding: EdgeInsets.symmetric(
                     horizontal: isMobile ? 20 : horizontalPadding,
                   ),
-                  itemCount: 6,
+                  itemCount: 5,
                   itemBuilder: (context, index) {
                     final projectData = _getProjectData(index);
 
@@ -189,6 +190,12 @@ class _DigitalGalleryState extends State<DigitalGallery> {
                   },
                 ),
               ),
+
+              if (!isMobile)
+                const Padding(
+                  padding: EdgeInsets.only(top: 40),
+                  child: AccretiveDataFeed(),
+                ).animate().fadeIn(delay: GetNumUtils(1).seconds),
             ],
           ),
         ],

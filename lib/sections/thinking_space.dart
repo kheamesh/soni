@@ -13,24 +13,26 @@ class ThinkingSpace extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(ThinkingController());
     final isMobile = Responsive.isMobile(context);
-    
+
     return Container(
-      padding: EdgeInsets.symmetric(vertical: isMobile ? Get.height * 0.06 : Get.height * 0.1),
+      padding: EdgeInsets.symmetric(
+        vertical: isMobile ? Get.height * 0.06 : Get.height * 0.1,
+      ),
       child: Column(
         children: [
           Text(
             AppStrings.mentalSandbox,
             style: TextStyle(
-              color: AppColors.textPrimary, 
-              fontSize: isMobile ? 12 : 14, 
-              letterSpacing: isMobile ? 5 : 10, 
-              fontWeight: FontWeight.w300
+              color: AppColors.textPrimary,
+              fontSize: isMobile ? 12 : 14,
+              letterSpacing: isMobile ? 5 : 10,
+              fontWeight: FontWeight.w300,
             ),
           ),
           SizedBox(height: isMobile ? Get.height * 0.08 : Get.height * 0.12),
           QuestionBlock(
             id: "why",
-            question: AppStrings.whyQuestion, 
+            question: AppStrings.whyQuestion,
             initialAnswer: AppStrings.whyInitial,
             glitchAnswer: AppStrings.whyGlitch,
             isMobile: isMobile,
@@ -38,7 +40,7 @@ class ThinkingSpace extends StatelessWidget {
           SizedBox(height: isMobile ? Get.height * 0.08 : Get.height * 0.12),
           QuestionBlock(
             id: "whatif",
-            question: AppStrings.whatIfQuestion, 
+            question: AppStrings.whatIfQuestion,
             initialAnswer: AppStrings.whatIfInitial,
             glitchAnswer: AppStrings.whatIfGlitch,
             isMobile: isMobile,
@@ -55,11 +57,11 @@ class QuestionBlock extends StatelessWidget {
   final String initialAnswer;
   final String glitchAnswer;
   final bool isMobile;
-  
+
   const QuestionBlock({
-    super.key, 
+    super.key,
     required this.id,
-    required this.question, 
+    required this.question,
     required this.initialAnswer,
     required this.glitchAnswer,
     required this.isMobile,
@@ -68,7 +70,7 @@ class QuestionBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ThinkingController>();
-    
+
     return GestureDetector(
       onTap: () {
         if (!controller.isRevealed(id).value) {
@@ -93,9 +95,9 @@ class QuestionBlock extends StatelessWidget {
           Obx(() {
             final revealed = controller.isRevealed(id).value;
             final glitched = controller.isGlitched(id).value;
-            
+
             if (!revealed) return const SizedBox.shrink();
-            
+
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
               child: SizedBox(
@@ -103,15 +105,23 @@ class QuestionBlock extends StatelessWidget {
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
                   transitionBuilder: (child, animation) {
-                    return child.animate().shake(hz: 10, duration: const Duration(milliseconds: 200)).fadeIn();
+                    return child
+                        .animate()
+                        .shake(
+                          hz: 10,
+                          duration: const Duration(milliseconds: 200),
+                        )
+                        .fadeIn();
                   },
                   child: Text(
                     glitched ? glitchAnswer : initialAnswer,
                     key: ValueKey(glitched),
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: glitched ? AppColors.accent : AppColors.textPrimary, 
-                      fontSize: isMobile ? 16 : 20, 
+                      color: glitched
+                          ? AppColors.accent
+                          : AppColors.textPrimary,
+                      fontSize: isMobile ? 16 : 20,
                       fontStyle: FontStyle.italic,
                       fontFamily: glitched ? 'monospace' : null,
                     ),

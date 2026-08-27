@@ -360,6 +360,17 @@ class TransmissionHub extends StatelessWidget {
           ? CrossAxisAlignment.center
           : CrossAxisAlignment.start,
       children: [
+        Text(
+          AppStrings.insertInfo,
+          style: TextStyle(
+            color: AppColors.primary,
+            fontSize: isMobile ? 12 : 20,
+            letterSpacing: 4,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'monospace',
+          ),
+        ).animate().fadeIn().slideY(begin: 0.2, end: 0),
+        SizedBox(height: Get.height * 0.03),
         _buildTextField(
           AppStrings.labelName,
           AppStrings.hintEnterName,
@@ -496,10 +507,10 @@ class TransmissionHub extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: AppColors.primary.withValues(alpha: 0.6),
+            color: AppColors.primary.withValues(alpha: 0.8),
             fontSize: isMobile ? 9 : 10,
             letterSpacing: 2,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
             fontFamily: 'monospace',
           ),
         ),

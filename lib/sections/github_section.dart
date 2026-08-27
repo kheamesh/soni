@@ -12,7 +12,10 @@ class GithubSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 100, horizontal: size.width * 0.1),
+      padding: EdgeInsets.symmetric(
+        vertical: 100,
+        horizontal: size.width * 0.1,
+      ),
       child: Column(
         children: [
           const SectionHeader(
@@ -28,41 +31,62 @@ class GithubSection extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(FontAwesomeIcons.github, size: 40, color: AppColors.white),
+                    const Icon(
+                      FontAwesomeIcons.github,
+                      size: 40,
+                      color: AppColors.white,
+                    ),
                     const SizedBox(width: 20),
                     const Text(
                       "@kheameshsoni",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.white),
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.white,
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 40),
                 SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(24, (colIndex) {
-                      return Column(
-                        children: List.generate(7, (rowIndex) {
-                          final color = _getContributionColor(colIndex, rowIndex);
-                          return Container(
-                            width: 14,
-                            height: 14,
-                            margin: const EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                              color: color,
-                              borderRadius: BorderRadius.circular(2),
-                              boxShadow: color.a > 0.5 
-                                ? [BoxShadow(color: color.withValues(alpha: 0.2), blurRadius: 4)] 
-                                : null,
-                            ),
+                      scrollDirection: Axis.horizontal,
+                      physics: const NeverScrollableScrollPhysics(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(24, (colIndex) {
+                          return Column(
+                            children: List.generate(7, (rowIndex) {
+                              final color = _getContributionColor(
+                                colIndex,
+                                rowIndex,
+                              );
+                              return Container(
+                                width: 14,
+                                height: 14,
+                                margin: const EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  color: color,
+                                  borderRadius: BorderRadius.circular(2),
+                                  boxShadow: color.a > 0.5
+                                      ? [
+                                          BoxShadow(
+                                            color: color.withValues(alpha: 0.2),
+                                            blurRadius: 4,
+                                          ),
+                                        ]
+                                      : null,
+                                ),
+                              );
+                            }),
                           );
                         }),
-                      );
-                    }),
-                  ),
-                ).animate(onPlay: (c) => c.repeat()).shimmer(duration: 3.seconds, color: AppColors.whiteTransparent.withValues(alpha: 0.1)),
+                      ),
+                    )
+                    .animate(onPlay: (c) => c.repeat())
+                    .shimmer(
+                      duration: 3.seconds,
+                      color: AppColors.whiteTransparent.withValues(alpha: 0.1),
+                    ),
                 const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -92,8 +116,20 @@ class GithubSection extends StatelessWidget {
   Widget _buildStat(String label, String value) {
     return Column(
       children: [
-        Text(value, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.primary)),
-        Text(label, style: TextStyle(color: AppColors.textPrimary.withValues(alpha: 0.38))),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: AppColors.primary,
+          ),
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            color: AppColors.textPrimary.withValues(alpha: 0.38),
+          ),
+        ),
       ],
     );
   }

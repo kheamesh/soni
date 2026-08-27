@@ -24,7 +24,12 @@ class FooterExperience extends StatelessWidget {
         horizontal: isMobile ? 20 : 100,
       ),
       decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: AppColors.whiteTransparent.withValues(alpha: 0.1), width: 0.5)),
+        border: Border(
+          top: BorderSide(
+            color: AppColors.whiteTransparent.withValues(alpha: 0.1),
+            width: 0.5,
+          ),
+        ),
       ),
       child: Column(
         children: [
@@ -175,7 +180,10 @@ class FooterExperience extends StatelessWidget {
               ),
             ],
           ),
-          Divider(color: AppColors.whiteTransparent.withValues(alpha: 0.1), height: 30),
+          Divider(
+            color: AppColors.whiteTransparent.withValues(alpha: 0.1),
+            height: 30,
+          ),
           Obx(
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,

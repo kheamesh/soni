@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:soni/core/app_strings.dart';
 import '../core/app_colors.dart';
 import '../widgets/section_header.dart';
 import '../widgets/glass_card.dart';
