@@ -21,8 +21,8 @@ class AppIcons {
   static const IconData speed = Icons.speed;
 
   // Social
-  static const IconData github = FontAwesomeIcons.github;
-  static const IconData linkedin = FontAwesomeIcons.linkedin;
+  static const github = FontAwesomeIcons.github;
+  static const linkedin = FontAwesomeIcons.linkedin;
 
   // Tech Logos (Lab)
   static const IconData flutterLogo = Icons.flutter_dash;

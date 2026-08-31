@@ -31,7 +31,7 @@ class GithubSection extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
+                    FaIcon(
                       FontAwesomeIcons.github,
                       size: 40,
                       color: AppColors.white,

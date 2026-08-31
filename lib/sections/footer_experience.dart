@@ -209,7 +209,7 @@ class FooterExperience extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialUplink(IconData icon, String label, String url) {
+  Widget _buildSocialUplink(dynamic icon, String label, String url) {
     return CursorHoverRegion(
       text: AppStrings.uplink,
       child: GestureDetector(
@@ -217,23 +217,27 @@ class FooterExperience extends StatelessWidget {
           final uri = Uri.parse(url);
           if (await canLaunchUrl(uri)) await launchUrl(uri);
         },
-        child:
-            Column(
-                  children: [
-                    FaIcon(icon, color: AppColors.white, size: 24),
-                    const SizedBox(height: 10),
-                    Text(
-                      label,
-                      style: TextStyle(
-                        color: AppColors.textPrimary.withValues(alpha: 0.6),
-                        fontSize: 10,
-                        letterSpacing: 2,
-                      ),
-                    ),
-                  ],
-                )
-                .animate(onPlay: (c) => c.repeat(reverse: true))
-                .moveY(begin: 0, end: -5, duration: const Duration(seconds: 2)),
+        child: Column(
+          children: [
+            if (icon is IconData)
+              Icon(icon, color: AppColors.white, size: 24)
+            else
+              FaIcon(icon, color: AppColors.white, size: 24),
+            const SizedBox(height: 10),
+            Text(
+              label,
+              style: TextStyle(
+                color: AppColors.textPrimary.withValues(alpha: 0.6),
+                fontSize: 10,
+                letterSpacing: 2,
+              ),
+            ),
+          ],
+        ).animate(onPlay: (c) => c.repeat(reverse: true)).moveY(
+              begin: 0,
+              end: -5,
+              duration: const Duration(seconds: 2),
+            ),
       ),
     );
   }
