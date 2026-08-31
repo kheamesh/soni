@@ -20,7 +20,7 @@ class AppStrings {
 
   // Hero Section
   static const String heroEngineer = "THE ENGINEER";
-  static const String heroName = "KHEAMESH  SONI";
+  static const String heroName = "KHEAMESH SONI";
   static const String heroDescription = "I don't just write code.\nI build scalable, high-performance digital ecosystems.";
   static const String expTag1 = "4+ YEARS EXPERIENCE";
   static const String expTag2 = "FLUTTER & DART SPECIALIST";
