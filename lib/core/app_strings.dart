@@ -1,3 +1,6 @@
+import 'app_url.dart';
+import 'app_image.dart';
+
 class AppStrings {
   // Main / Global
   static const String appTitle = 'ENTER THE MIND OF A FLUTTER DEVELOPER';
@@ -56,6 +59,17 @@ class AppStrings {
   // Experience Section
   static const String experienceSectionTitle = "Professional Journey";
   static const String experienceSectionSubtitle = "Experience";
+
+  // GitHub Section
+  static const String githubSectionTitle = "Open Source Contributions";
+  static const String githubSectionSubtitle = "GitHub";
+  static const String githubUserName = "@kheameshsoni";
+  static const String githubRepoLabel = "Repositories";
+  static const String githubRepoCount = "45";
+  static const String githubFollowersLabel = "Followers";
+  static const String githubFollowersCount = "1.2k";
+  static const String githubContributionsLabel = "Contributions";
+  static const String githubContributionsCount = "800+";
 
   // Digital Gallery
   static const String archive = "ARCHIVE";
@@ -204,4 +218,89 @@ class AppStrings {
   static const String githubUrl = "https://github.com/Weingeniouss";
   static const String linkedinUrl = "https://linkedin.com";
   static const String emailUrl = "mailto:kheamesh@example.com";
+
+  static const List<ProjectData> projects = [
+    ProjectData(
+      title: projectAlphaTitle,
+      desc: projectAlphaDesc,
+      problem: projectAlphaProblem,
+      build: projectAlphaBuild,
+      result: projectAlphaResult,
+      link: AppUrl.projectAlphaLink,
+      image: AppImage.kohiraImage,
+    ),
+    ProjectData(
+      title: projectBetaTitle,
+      desc: projectBetaDesc,
+      problem: projectBetaProblem,
+      build: projectBetaBuild,
+      result: projectBetaResult,
+      link: AppUrl.projectBetaLink,
+      image: AppImage.classicImage,
+    ),
+    ProjectData(
+      title: projectGammaTitle,
+      desc: projectGammaDesc,
+      problem: projectGammaProblem,
+      build: projectGammaBuild,
+      result: projectGammaResult,
+      link: AppUrl.projectGammaLink,
+      image: AppImage.hirexpertImage,
+    ),
+    ProjectData(
+      title: projectDeltaTitle,
+      desc: projectDeltaDesc,
+      problem: projectDeltaProblem,
+      build: projectDeltaBuild,
+      result: projectDeltaResult,
+      link: AppUrl.projectDeltaLink,
+      image: AppImage.traadetImage,
+    ),
+    ProjectData(
+      title: projectMetalTitle,
+      desc: projectMetalDesc,
+      problem: projectMetalProblem,
+      build: projectMetalBuild,
+      result: projectMetalResult,
+      link: AppUrl.projectMetalLink,
+      image: AppImage.rukminiImage,
+    ),
+  ];
+
+  static const List<Map<String, String>> experiences = [
+    {
+      "period": "2022 - Present",
+      "company": "Tech Innovators Inc.",
+      "role": "Senior Flutter Developer",
+      "description":
+          "Leading the mobile team in developing high-performance applications. Implemented scalable architecture and reduced app startup time by 40%.",
+    },
+    {
+      "period": "2020 - 2022",
+      "company": "Creative Solns",
+      "role": "Full Stack Flutter Developer",
+      "description":
+          "Developed and maintained multiple cross-platform apps. Integrated complex third-party APIs and payment gateways.",
+    },
+  ];
+}
+
+class ProjectData {
+  final String title;
+  final String desc;
+  final String problem;
+  final String build;
+  final String result;
+  final String link;
+  final String image;
+
+  const ProjectData({
+    required this.title,
+    required this.desc,
+    required this.problem,
+    required this.build,
+    required this.result,
+    required this.link,
+    required this.image,
+  });
 }

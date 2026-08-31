@@ -26,10 +26,10 @@ class ExperienceSection extends StatelessWidget {
           ),
           const SizedBox(height: 60),
           Column(
-            children: List.generate(experiences.length, (index) {
+            children: List.generate(AppStrings.experiences.length, (index) {
               return ExperienceItem(
-                exp: experiences[index],
-                isLast: index == experiences.length - 1,
+                exp: AppStrings.experiences[index],
+                isLast: index == AppStrings.experiences.length - 1,
               );
             }),
           ),
@@ -167,20 +167,3 @@ class ExperienceItem extends StatelessWidget {
     );
   }
 }
-
-final List<Map<String, String>> experiences = [
-  {
-    "period": "2022 - Present",
-    "company": "Tech Innovators Inc.",
-    "role": "Senior Flutter Developer",
-    "description":
-        "Leading the mobile team in developing high-performance applications. Implemented scalable architecture and reduced app startup time by 40%.",
-  },
-  {
-    "period": "2020 - 2022",
-    "company": "Creative Solns",
-    "role": "Full Stack Flutter Developer",
-    "description":
-        "Developed and maintained multiple cross-platform apps. Integrated complex third-party APIs and payment gateways.",
-  },
-];

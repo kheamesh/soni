@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:soni/core/app_strings.dart';
 import '../core/app_colors.dart';
 import '../widgets/section_header.dart';
 import '../widgets/glass_card.dart';
@@ -19,8 +20,8 @@ class GithubSection extends StatelessWidget {
       child: Column(
         children: [
           const SectionHeader(
-            title: "Open Source Contributions",
-            subtitle: "GitHub",
+            title: AppStrings.githubSectionTitle,
+            subtitle: AppStrings.githubSectionSubtitle,
             crossAxisAlignment: CrossAxisAlignment.center,
           ),
           const SizedBox(height: 60),
@@ -38,7 +39,7 @@ class GithubSection extends StatelessWidget {
                     ),
                     const SizedBox(width: 20),
                     const Text(
-                      "@kheameshsoni",
+                      AppStrings.githubUserName,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -91,9 +92,18 @@ class GithubSection extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildStat("Repositories", "45"),
-                    _buildStat("Followers", "1.2k"),
-                    _buildStat("Contributions", "800+"),
+                    _buildStat(
+                      AppStrings.githubRepoLabel,
+                      AppStrings.githubRepoCount,
+                    ),
+                    _buildStat(
+                      AppStrings.githubFollowersLabel,
+                      AppStrings.githubFollowersCount,
+                    ),
+                    _buildStat(
+                      AppStrings.githubContributionsLabel,
+                      AppStrings.githubContributionsCount,
+                    ),
                   ],
                 ),
               ],

@@ -165,26 +165,20 @@ class _DigitalGalleryState extends State<DigitalGallery> {
                   padding: EdgeInsets.symmetric(
                     horizontal: isMobile ? 20 : horizontalPadding,
                   ),
-                  itemCount: 5,
+                  itemCount: AppStrings.projects.length,
                   itemBuilder: (context, index) {
-                    final projectData = _getProjectData(index);
-
-                    if (projectData.isEmpty) {
-                      return SizedBox(
-                        width: isMobile ? Get.width * 0.65 : Get.width * 0.17,
-                      );
-                    }
+                    final project = AppStrings.projects[index];
 
                     return GalleryCard(
                       id: "project_$index",
                       index: index,
-                      title: projectData['title'],
-                      description: projectData['desc'],
-                      problem: projectData['problem'],
-                      engineeringBuild: projectData['build'],
-                      result: projectData['result'],
-                      link: projectData['link'],
-                      imagePath: projectData['image'],
+                      title: project.title,
+                      description: project.desc,
+                      problem: project.problem,
+                      engineeringBuild: project.build,
+                      result: project.result,
+                      link: project.link,
+                      imagePath: project.image,
                     );
                   },
                 ),
@@ -200,62 +194,5 @@ class _DigitalGalleryState extends State<DigitalGallery> {
         ],
       ),
     );
-  }
-
-  Map<String, dynamic> _getProjectData(int index) {
-    switch (index) {
-      case 0:
-        return {
-          'title': AppStrings.projectAlphaTitle,
-          'desc': AppStrings.projectAlphaDesc,
-          'problem': AppStrings.projectAlphaProblem,
-          'build': AppStrings.projectAlphaBuild,
-          'result': AppStrings.projectAlphaResult,
-          'link': AppUrl.projectAlphaLink,
-          'image': AppImage.kohiraImage,
-        };
-      case 1:
-        return {
-          'title': AppStrings.projectBetaTitle,
-          'desc': AppStrings.projectBetaDesc,
-          'problem': AppStrings.projectBetaProblem,
-          'build': AppStrings.projectBetaBuild,
-          'result': AppStrings.projectBetaResult,
-          'link': AppUrl.projectBetaLink,
-          'image': AppImage.classicImage,
-        };
-      case 2:
-        return {
-          'title': AppStrings.projectGammaTitle,
-          'desc': AppStrings.projectGammaDesc,
-          'problem': AppStrings.projectGammaProblem,
-          'build': AppStrings.projectGammaBuild,
-          'result': AppStrings.projectGammaResult,
-          'link': AppUrl.projectGammaLink,
-          'image': AppImage.hirexpertImage,
-        };
-      case 3:
-        return {
-          'title': AppStrings.projectDeltaTitle,
-          'desc': AppStrings.projectDeltaDesc,
-          'problem': AppStrings.projectDeltaProblem,
-          'build': AppStrings.projectDeltaBuild,
-          'result': AppStrings.projectDeltaResult,
-          'link': AppUrl.projectDeltaLink,
-          'image': AppImage.traadetImage,
-        };
-      case 4:
-        return {
-          'title': AppStrings.projectMetalTitle,
-          'desc': AppStrings.projectMetalDesc,
-          'problem': AppStrings.projectMetalProblem,
-          'build': AppStrings.projectMetalBuild,
-          'result': AppStrings.projectMetalResult,
-          'link': AppUrl.projectMetalLink,
-          'image': AppImage.rukminiImage,
-        };
-      default:
-        return {};
-    }
   }
 }
