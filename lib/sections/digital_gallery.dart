@@ -33,15 +33,16 @@ class _DigitalGalleryState extends State<DigitalGallery> {
     final isMobile = Responsive.isMobile(context);
 
     // Calculate dynamic horizontal padding for centering
-    final double itemWidth = Get.width * 0.17 + 20; // Card width + margins
+    final double cardWidth = isMobile ? Get.width * 0.5 : Get.width * 0.16;
+    final double itemWidth = cardWidth + 30; // Card width + margins
     final double totalContentWidth = 5 * itemWidth;
-    double horizontalPadding = (Get.width - totalContentWidth) / 2;
-    if (horizontalPadding < 20) horizontalPadding = 20;
+    double horizontalPadding = (Get.width - totalContentWidth) / 1.5;
+    if (horizontalPadding < 30) horizontalPadding = 30;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? Get.height * 0.08 : Get.height * 0.12,
+        vertical: isMobile ? Get.height * 0.08 : Get.height * 0.05,
       ),
       child: Stack(
         children: [
@@ -63,7 +64,7 @@ class _DigitalGalleryState extends State<DigitalGallery> {
                   Text(
                     AppStrings.archive,
                     style: TextStyle(
-                      color: AppColors.textPrimary.withValues(alpha: 0.03),
+                      color: AppColors.textPrimary.withValues(alpha: 0.08),
                       fontSize: isMobile ? Get.width * 0.2 : Get.width * 0.15,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 20,
@@ -122,9 +123,7 @@ class _DigitalGalleryState extends State<DigitalGallery> {
                           Text(
                             AppStrings.galleryTitle,
                             style: TextStyle(
-                              color: AppColors.textPrimary.withValues(
-                                alpha: 0.9,
-                              ),
+                              color: AppColors.textPrimary,
                               fontSize: isMobile ? 18 : 24,
                               letterSpacing: isMobile ? 5 : 10,
                               fontWeight: FontWeight.w300,
@@ -149,13 +148,13 @@ class _DigitalGalleryState extends State<DigitalGallery> {
 
               Padding(
                 padding: EdgeInsets.only(
-                  bottom: isMobile ? Get.height * 0.06 : Get.height * 0.1,
+                  bottom: isMobile ? Get.height * 0.06 : Get.height * 0.01,
                 ),
               ),
 
               // Center-aligned scrolling list
               SizedBox(
-                height: isMobile ? Get.height * 0.55 : Get.height * 0.7,
+                height: isMobile ? Get.height * 0.55 : Get.height * 0.5,
                 width: double.infinity,
                 child: ListView.builder(
                   controller: _scrollController,

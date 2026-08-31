@@ -23,12 +23,12 @@ class ThinkingSpace extends StatelessWidget {
           Text(
             AppStrings.mentalSandbox,
             style: TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: isMobile ? 12 : 14,
-              letterSpacing: isMobile ? 5 : 10,
-              fontWeight: FontWeight.w300,
+              color: AppColors.primary,
+              fontSize: isMobile ? 14 : 16,
+              letterSpacing: isMobile ? 8 : 12,
+              fontWeight: FontWeight.bold,
             ),
-          ),
+          ).animate().fadeIn().shimmer(color: AppColors.white),
           SizedBox(height: isMobile ? Get.height * 0.08 : Get.height * 0.12),
           QuestionBlock(
             id: "why",
@@ -88,7 +88,7 @@ class QuestionBlock extends StatelessWidget {
               style: TextStyle(
                 fontSize: isMobile ? Get.width * 0.12 : Get.width * 0.06,
                 fontWeight: FontWeight.w900,
-                color: AppColors.textPrimary.withValues(alpha: 0.05),
+                color: AppColors.textPrimary.withValues(alpha: 0.15),
               ),
             ).animate(target: revealed ? 1 : 0).tint(color: AppColors.primary);
           }),

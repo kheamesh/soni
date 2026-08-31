@@ -62,7 +62,7 @@ class TechnologyConstellation extends StatelessWidget {
       onHover: (e) => controller.updateHoverPos(e.localPosition),
       child: ExcludeSemantics(
         child: Container(
-          height: isMobile ? 500 : 700,
+          height: isMobile ? 500 : 600,
           width: double.infinity,
           color: AppColors.transparent,
           child: AnimatedBuilder(
@@ -186,9 +186,9 @@ class ConstellationPainter extends CustomPainter {
       textPainter.text = TextSpan(
         text: tech['name'],
         style: TextStyle(
-          color: AppColors.white.withValues(alpha: 0.9),
-          fontSize: (tech['size'] as double) * scale,
-          letterSpacing: 2,
+          color: AppColors.white.withValues(alpha: 0.95),
+          fontSize: max(10.0, (tech['size'] as double) * scale),
+          letterSpacing: 1.5,
           fontWeight: FontWeight.bold,
           shadows: [
             Shadow(

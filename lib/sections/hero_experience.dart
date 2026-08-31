@@ -71,10 +71,10 @@ class HeroExperience extends StatelessWidget {
       children: [
         Text(
               AppStrings.heroEngineer,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.primary,
-                fontSize: 14,
-                letterSpacing: 8,
+                fontSize: isDesktop ? 14 : 16,
+                letterSpacing: isDesktop ? 8 : 4,
                 fontWeight: FontWeight.bold,
               ),
             )
@@ -98,8 +98,8 @@ class HeroExperience extends StatelessWidget {
               AppStrings.heroDescription,
               textAlign: isDesktop ? TextAlign.left : TextAlign.center,
               style: TextStyle(
-                fontSize: isDesktop ? 22 : 16,
-                color: AppColors.textPrimary.withValues(alpha: 0.7),
+                fontSize: isDesktop ? 22 : 18,
+                color: AppColors.textPrimary.withValues(alpha: 0.9),
                 height: 1.5,
               ),
             )
@@ -119,25 +119,26 @@ class HeroExperience extends StatelessWidget {
   Widget _buildCVButtons(BuildContext context, bool isDesktop) {
     final controller = Get.find<HeroExperienceController>();
     return Row(
-      mainAxisAlignment:
-          isDesktop ? MainAxisAlignment.start : MainAxisAlignment.center,
-      children: [
-        _buildActionButton(
-          label: AppStrings.viewCV,
-          onPressed: controller.viewCV,
-          isPrimary: true,
-        ),
-        const SizedBox(width: 20),
-        _buildActionButton(
-          label: AppStrings.downloadCV,
-          onPressed: controller.downloadCV,
-          isPrimary: false,
-        ),
-      ],
-    ).animate().fadeIn(delay: const Duration(milliseconds: 1500)).slideY(
-      begin: 0.2,
-      end: 0,
-    );
+          mainAxisAlignment: isDesktop
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.center,
+          children: [
+            _buildActionButton(
+              label: AppStrings.viewCV,
+              onPressed: controller.viewCV,
+              isPrimary: true,
+            ),
+            const SizedBox(width: 20),
+            _buildActionButton(
+              label: AppStrings.downloadCV,
+              onPressed: controller.downloadCV,
+              isPrimary: false,
+            ),
+          ],
+        )
+        .animate()
+        .fadeIn(delay: const Duration(milliseconds: 1500))
+        .slideY(begin: 0.2, end: 0);
   }
 
   Widget _buildActionButton({
@@ -151,8 +152,9 @@ class HeroExperience extends StatelessWidget {
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           foregroundColor: isPrimary ? AppColors.black : AppColors.primary,
-          backgroundColor:
-              isPrimary ? AppColors.primary : AppColors.transparent,
+          backgroundColor: isPrimary
+              ? AppColors.primary
+              : AppColors.transparent,
           side: const BorderSide(color: AppColors.primary, width: 2),
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
@@ -213,8 +215,8 @@ class HeroExperience extends StatelessWidget {
                 child: Text(
                   text,
                   style: TextStyle(
-                    color: AppColors.textPrimary.withValues(alpha: 0.5),
-                    fontSize: 12,
+                    color: AppColors.textPrimary.withValues(alpha: 0.8),
+                    fontSize: 13,
                     letterSpacing: 2,
                     fontWeight: FontWeight.bold,
                   ),
@@ -278,7 +280,7 @@ class SmartphoneAssembler extends StatelessWidget {
                               duration: const Duration(seconds: 2),
                             )
                             .shimmer(
-                              color: AppColors.primary.withValues(alpha: 0.3),
+                              color: AppColors.primary.withValues(alpha: 0.6),
                             ),
                         const SizedBox(height: 30),
                         const CodeSimulator(),
@@ -305,12 +307,12 @@ class SmartphoneAssembler extends StatelessWidget {
                                 height: 50,
                                 decoration: BoxDecoration(
                                   color: AppColors.secondary.withValues(
-                                    alpha: 0.2,
+                                    alpha: 0.4,
                                   ),
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(
                                     color: AppColors.primary.withValues(
-                                      alpha: 0.5,
+                                      alpha: 0.8,
                                     ),
                                   ),
                                   boxShadow: [
@@ -371,7 +373,7 @@ class CodeSimulator extends StatelessWidget {
                         entry.value,
                         style: const TextStyle(
                           color: AppColors.primary,
-                          fontSize: 8,
+                          fontSize: 10,
                           fontFamily: 'monospace',
                         ),
                       )

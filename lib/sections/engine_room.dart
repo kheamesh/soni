@@ -20,7 +20,7 @@ class EngineRoom extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? 60 : 100,
+        vertical: isMobile ? 60 : 50,
         horizontal: isMobile ? 20 : 50,
       ),
       child: Column(
@@ -39,8 +39,8 @@ class EngineRoom extends StatelessWidget {
             AppStrings.engineDescription,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: AppColors.textPrimary.withValues(alpha: 0.38),
-              fontSize: isMobile ? 10 : 12,
+              color: AppColors.textPrimary.withValues(alpha: 0.6),
+              fontSize: isMobile ? 12 : 14,
               letterSpacing: 2,
             ),
           ),
@@ -107,7 +107,7 @@ class EngineRoom extends StatelessWidget {
     double screenWidth,
   ) {
     return SizedBox(
-      height: isMobile ? 400 : 500,
+      height: isMobile ? 500 : 600,
       width: double.infinity,
       child: ExcludeSemantics(
         child: AnimatedBuilder(
@@ -228,23 +228,23 @@ class MachinePainter extends CustomPainter {
       textPainter.text = TextSpan(
         text: labels[i % labels.length],
         style: TextStyle(
-          color: AppColors.white.withValues(alpha: 0.7),
-          fontSize: (isMobile ? 8 : 10) * scale,
+          color: AppColors.white.withValues(alpha: 0.9),
+          fontSize: (isMobile ? 10 : 12),
           fontWeight: FontWeight.bold,
           fontFamily: 'monospace',
-          letterSpacing: 1.5,
+          letterSpacing: 1.2,
         ),
       );
       textPainter.layout();
 
       Offset textOffset = Offset(
-        nodePos.dx + (cos(angle) * 15),
-        nodePos.dy + (sin(angle) * 15) - (textPainter.height / 2),
+        nodePos.dx + (cos(angle) * 20),
+        nodePos.dy + (sin(angle) * 20) - (textPainter.height / 2),
       );
 
       if (cos(angle) < 0) {
         textOffset = Offset(
-          textOffset.dx - textPainter.width - 20,
+          textOffset.dx - textPainter.width - 25,
           textOffset.dy,
         );
       }

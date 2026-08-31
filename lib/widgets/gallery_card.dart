@@ -39,10 +39,10 @@ class GalleryCard extends StatelessWidget {
     final controller = Get.find<GalleryController>();
     final isMobile = Responsive.isMobile(context);
 
-    final cardWidth = isMobile ? Get.width * 0.65 : Get.width * 0.17;
-    final cardHeight = isMobile ? Get.height * 0.45 : Get.height * 0.55;
-    final mockupWidth = cardWidth * 0.75;
-    final mockupHeight = isMobile ? Get.height * 0.32 : Get.height * 0.34;
+    final cardWidth = isMobile ? Get.width * 0.5 : Get.width * 0.16;
+    final cardHeight = isMobile ? Get.height * 0.38 : Get.height * 0.42;
+    final mockupWidth = cardWidth * 0.70;
+    final mockupHeight = isMobile ? Get.height * 0.24 : Get.height * 0.22;
 
     return GestureDetector(
       onTap: () => _showStory(context),
@@ -74,6 +74,16 @@ class GalleryCard extends StatelessWidget {
                     if (isHovered)
                       Positioned.fill(
                         child: CustomPaint(
+                          painter: HUDBracketPainter(
+                            color: AppColors.primary,
+                            animationValue: tilt.distance.clamp(0, 1),
+                          ),
+                        ).animate().fadeIn(),
+                      ),
+
+                    if (isHovered)
+                      Positioned.fill(
+                        child: CustomPaint(
                           painter: TechCornerPainter(
                             color: AppColors.primary.withValues(alpha: 0.5),
                           ),
@@ -82,6 +92,7 @@ class GalleryCard extends StatelessWidget {
 
                     _buildCardContent(
                       isHovered,
+                      tilt,
                       isMobile,
                       cardWidth,
                       mockupWidth,
@@ -99,6 +110,7 @@ class GalleryCard extends StatelessWidget {
 
   Widget _buildCardContent(
     bool isHovered,
+    Offset tilt,
     bool isMobile,
     double cardWidth,
     double mockupWidth,
@@ -184,7 +196,7 @@ class GalleryCard extends StatelessWidget {
                     height: mockupHeight,
                     decoration: BoxDecoration(
                       color: AppColors.black,
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(4),
                       border: Border.all(
                         color: isHovered
                             ? AppColors.primary
@@ -201,12 +213,21 @@ class GalleryCard extends StatelessWidget {
                       ],
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(13),
+                      borderRadius: BorderRadius.circular(3),
                       child: Stack(
                         fit: StackFit.expand,
                         children: [
                           if (imagePath != null)
-                            Image.asset(imagePath!, fit: BoxFit.cover)
+                            Transform.scale(
+                              scale: isHovered ? 1.2 : 1.05,
+                              child: Transform.translate(
+                                offset: Offset(tilt.dx * 15, tilt.dy * 15),
+                                child: Image.asset(
+                                  imagePath!,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            )
                           else
                             Center(
                               child: Icon(
@@ -308,40 +329,62 @@ class GalleryCard extends StatelessWidget {
           const Spacer(),
 
           Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: isMobile ? 16 : 18,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 3,
-              shadows: isHovered
-                  ? [
-                      Shadow(
-                        color: AppColors.primary.withValues(alpha: 0.5),
-                        blurRadius: 10,
-                      ),
-                    ]
-                  : [],
-            ),
-          ),
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: isMobile ? 18 : 17,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: isHovered ? 6 : 2,
+                  shadows: [
+                    Shadow(
+                      color: AppColors.primary.withValues(alpha: 0.8),
+                      blurRadius: 15,
+                    ),
+                    if (isHovered)
+                      const Shadow(color: AppColors.primary, blurRadius: 40),
+                  ],
+                ),
+              )
+              .animate(target: isHovered ? 1 : 0)
+              .custom(
+                duration: 400.ms,
+                builder: (context, value, child) {
+                  return Padding(
+                    padding: EdgeInsets.only(top: value * 10),
+                    child: child,
+                  );
+                },
+              ),
 
           Padding(padding: EdgeInsets.only(bottom: Get.height * 0.015)),
 
           AnimatedOpacity(
-            opacity: isHovered || isMobile ? 0.7 : 0.0,
+            opacity: isHovered || isMobile ? 1.0 : 0.0,
             duration: const Duration(milliseconds: 300),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: cardWidth * 0.1),
-              child: Text(
-                description,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: isMobile ? 10 : 11,
-                  height: 1.5,
-                  fontFamily: 'monospace',
-                ),
+              padding: EdgeInsets.symmetric(horizontal: cardWidth * 0.05),
+              child: Column(
+                children: [
+                  Text(
+                    description,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.textPrimary.withValues(alpha: 0.9),
+                      fontSize: isMobile ? 11 : 13,
+                      height: 1.4,
+                      fontFamily: 'monospace',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  if (isHovered)
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      width: 40,
+                      height: 1,
+                      color: AppColors.primary,
+                    ).animate().scaleX(begin: 0, end: 1),
+                ],
               ),
             ),
           ),
@@ -403,14 +446,17 @@ class GalleryCard extends StatelessWidget {
                                         .scale()
                                         .fadeOut(),
                                     const SizedBox(width: 15),
-                                    Text(
-                                      "${AppStrings.storyHeader} $title",
-                                      style: TextStyle(
-                                        color: AppColors.primary,
-                                        fontSize: isMobile ? 14 : 18,
-                                        letterSpacing: 4,
-                                        fontFamily: 'monospace',
-                                        fontWeight: FontWeight.bold,
+                                    Expanded(
+                                      child: Text(
+                                        "${AppStrings.storyHeader} $title",
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontSize: isMobile ? 14 : 18,
+                                          letterSpacing: 4,
+                                          fontFamily: 'monospace',
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ],
@@ -455,26 +501,29 @@ class GalleryCard extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     if (link != null)
-                                      TextButton.icon(
-                                        onPressed: () async {
-                                          final uri = Uri.parse(link!);
-                                          if (await canLaunchUrl(uri)) {
-                                            await launchUrl(uri);
-                                          }
-                                        },
-                                        icon: const Icon(
-                                          AppIcons.link,
-                                          size: 18,
-                                        ),
-                                        label: const Text(
-                                          AppStrings.viewSource,
-                                          style: TextStyle(
-                                            fontFamily: 'monospace',
-                                            fontWeight: FontWeight.bold,
+                                      Flexible(
+                                        child: TextButton.icon(
+                                          onPressed: () async {
+                                            final uri = Uri.parse(link!);
+                                            if (await canLaunchUrl(uri)) {
+                                              await launchUrl(uri);
+                                            }
+                                          },
+                                          icon: const Icon(
+                                            AppIcons.link,
+                                            size: 18,
                                           ),
-                                        ),
-                                        style: TextButton.styleFrom(
-                                          foregroundColor: AppColors.primary,
+                                          label: const Text(
+                                            AppStrings.viewSource,
+                                            style: TextStyle(
+                                              fontFamily: 'monospace',
+                                              fontWeight: FontWeight.bold,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          style: TextButton.styleFrom(
+                                            foregroundColor: AppColors.primary,
+                                          ),
                                         ),
                                       ),
                                     TextButton(

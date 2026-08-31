@@ -54,7 +54,7 @@ class FooterExperience extends StatelessWidget {
           Text(
             AppStrings.footerSubTitle,
             style: TextStyle(
-              color: AppColors.primary.withValues(alpha: 0.6),
+              color: AppColors.primary.withValues(alpha: 0.8),
               fontSize: isMobile ? 12 : 16,
               letterSpacing: 4,
               fontFamily: 'monospace',
@@ -111,8 +111,8 @@ class FooterExperience extends StatelessWidget {
                 AppStrings.footerCopyright,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: AppColors.textPrimary.withValues(alpha: 0.24),
-                  fontSize: isMobile ? 8 : 10,
+                  color: AppColors.textPrimary.withValues(alpha: 0.5),
+                  fontSize: isMobile ? 10 : 12,
                   letterSpacing: 2,
                 ),
               ),
@@ -173,7 +173,7 @@ class FooterExperience extends StatelessWidget {
               Text(
                 AppStrings.systemLogs,
                 style: TextStyle(
-                  color: AppColors.textPrimary.withValues(alpha: 0.24),
+                  color: AppColors.textPrimary.withValues(alpha: 0.5),
                   fontSize: 10,
                   fontFamily: 'monospace',
                 ),
@@ -225,8 +225,8 @@ class FooterExperience extends StatelessWidget {
                     Text(
                       label,
                       style: TextStyle(
-                        color: AppColors.textPrimary.withValues(alpha: 0.24),
-                        fontSize: 8,
+                        color: AppColors.textPrimary.withValues(alpha: 0.6),
+                        fontSize: 10,
                         letterSpacing: 2,
                       ),
                     ),

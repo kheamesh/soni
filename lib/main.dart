@@ -62,8 +62,8 @@ class MainLayout extends StatelessWidget {
                   child: Text(
                     label,
                     style: TextStyle(
-                      color: AppColors.textPrimary.withValues(alpha: 0.7),
-                      fontSize: 10,
+                      color: AppColors.textPrimary,
+                      fontSize: 11,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 2,
                     ),
@@ -71,8 +71,8 @@ class MainLayout extends StatelessWidget {
                 )
                 .animate(onPlay: (c) => c.repeat(reverse: true))
                 .shimmer(
-                  duration: const Duration(seconds: 3),
-                  color: AppColors.primary.withValues(alpha: 0.3),
+                  duration: const Duration(seconds: 2),
+                  color: AppColors.primary,
                 ),
       ),
     );

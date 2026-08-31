@@ -20,7 +20,7 @@ class TransmissionHub extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? Get.height * 0.1 : Get.height * 0.15,
+        vertical: isMobile ? Get.height * 0.1 : Get.height * 0.001,
         horizontal: isMobile ? Get.width * 0.05 : Get.width * 0.04,
       ),
       child: Stack(
@@ -54,7 +54,7 @@ class TransmissionHub extends StatelessWidget {
               // Connection Nodes Visualizer
               _buildConnectionNodes(isMobile),
 
-              SizedBox(height: Get.height * 0.02),
+              SizedBox(height: Get.height * 0.01),
 
               Obx(() {
                 final transmitting = controller.isTransmitting;
@@ -62,16 +62,20 @@ class TransmissionHub extends StatelessWidget {
                       AppStrings.transmissionTitle,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: AppColors.textPrimary.withValues(alpha: 0.9),
+                        color: AppColors.textPrimary,
                         fontSize: isMobile
-                            ? Get.width * 0.06
-                            : Get.width * 0.025,
+                            ? Get.width * 0.08
+                            : Get.width * 0.03,
                         fontWeight: FontWeight.w900,
-                        letterSpacing: isMobile ? 2 : 5,
+                        letterSpacing: isMobile ? 4 : 8,
                         shadows: [
                           Shadow(
+                            color: AppColors.primary,
+                            blurRadius: 30,
+                          ),
+                          Shadow(
                             color: AppColors.primary.withValues(alpha: 0.5),
-                            blurRadius: 20,
+                            blurRadius: 10,
                           ),
                         ],
                       ),
@@ -337,8 +341,8 @@ class TransmissionHub extends StatelessWidget {
               Text(
                 text,
                 style: TextStyle(
-                  color: AppColors.textSecondary.withValues(alpha: 0.6),
-                  fontSize: 9,
+                  color: AppColors.textPrimary.withValues(alpha: 0.8),
+                  fontSize: 11,
                   fontFamily: 'monospace',
                   letterSpacing: 1,
                 ),
@@ -364,9 +368,9 @@ class TransmissionHub extends StatelessWidget {
           AppStrings.insertInfo,
           style: TextStyle(
             color: AppColors.primary,
-            fontSize: isMobile ? 12 : 20,
+            fontSize: isMobile ? 14 : 22,
             letterSpacing: 4,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.bold,
             fontFamily: 'monospace',
           ),
         ).animate().fadeIn().slideY(begin: 0.2, end: 0),
@@ -507,10 +511,10 @@ class TransmissionHub extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: AppColors.primary.withValues(alpha: 0.8),
-            fontSize: isMobile ? 9 : 10,
+            color: AppColors.primary,
+            fontSize: isMobile ? 11 : 12,
             letterSpacing: 2,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.bold,
             fontFamily: 'monospace',
           ),
         ),
@@ -521,8 +525,8 @@ class TransmissionHub extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(
-              color: AppColors.textPrimary.withValues(alpha: 0.1),
-              fontSize: 12,
+              color: AppColors.textPrimary.withValues(alpha: 0.3),
+              fontSize: 14,
             ),
             filled: true,
             fillColor: AppColors.white.withValues(alpha: 0.02),
@@ -599,10 +603,10 @@ class TransmissionHub extends StatelessWidget {
                     Text(
                       text,
                       style: TextStyle(
-                        color: AppColors.textPrimary.withValues(alpha: 0.8),
+                        color: AppColors.textPrimary,
                         letterSpacing: 2,
                         fontWeight: FontWeight.bold,
-                        fontSize: isMobile ? 12 : 14,
+                        fontSize: isMobile ? 14 : 16,
                       ),
                     ),
                     const SizedBox(width: 8),
