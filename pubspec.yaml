@@ -31,18 +31,18 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.8
-  google_fonts: ^6.2.1
-  flutter_animate: ^4.5.2
-  url_launcher: ^6.3.1
-  font_awesome_flutter: ^10.8.0
-  visibility_detector: ^0.4.0+2
-  flutter_svg: ^2.0.10+1
-  pointer_interceptor: ^0.10.1+1
-  get: ^4.6.6
-  path_provider: ^2.1.6
-  file_saver: ^0.4.0
-  syncfusion_flutter_pdfviewer: ^34.2.5
+  cupertino_icons:
+  google_fonts:
+  flutter_animate:
+  url_launcher:
+  font_awesome_flutter:
+  visibility_detector:
+  flutter_svg:
+  pointer_interceptor:
+  get:
+  path_provider:
+  file_saver:
+  syncfusion_flutter_pdfviewer:
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +68,7 @@ flutter:
 
   assets:
     - assets/images/
+
     - assets/cv/
 
   # An image asset can refer to one or more resolution-specific "variants", see
