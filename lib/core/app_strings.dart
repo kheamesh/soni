@@ -205,7 +205,7 @@ class AppStrings {
   static const String terminalSync = "[INFO] SYNC_COMPLETE: Developer identity synchronized.";
   static const String terminalLab = "[STATUS] LAB_ACTIVE: Interactive physics engine online.";
   static const String systemLogs = "SYSTEM_LOGS";
-  static const String ksSignature = "KHAMESH SONI";
+  static const String ksSignature = "KHEAMESH SONI";
   static const String githubLabel = "GITHUB_LINK";
   static const String linkedinLabel = "LINKEDIN_SYNC";
   static const String emailLabel = "SECURE_MAIL";
